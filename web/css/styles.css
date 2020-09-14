@@ -259,6 +259,43 @@ p {
 .footer .fa-heart {
   color: #fb866a;
 }
+.tHead {
+  width: 100%;
+  height: 600px;
+  position: relative;
+  background-image: url("/img/template/example_card.jpeg");
+  background-repeat: no-repeat;
+  background-size: 50%;
+  background-position: right;
+  overflow: hidden;
+}
+.tHead-triangle {
+  width: 100vw;
+  height: 100vh;
+  background-color: peachpuff;
+  position: relative;
+  clip-path: polygon(0 0, 0 600px, 45% 600px, 65% 0);
+}
+.tHead-text {
+  font-size: 250%;
+  position: absolute;
+  display: block;
+  top: 20%;
+  left: 10%;
+  width: 240px;
+}
+.tHead-img {
+  width: 1000px;
+  right: 0px;
+  position: absolute;
+  filter: blur(3px);
+
+}
+@media (min-width: 950px) {
+  .tHead-space {
+
+  }
+}
 /* Extra small devices (phones, less than 768px) */
 @media (max-width: 767px) {
   .sidebar-wrapper {

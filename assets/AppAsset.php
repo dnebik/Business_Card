@@ -22,14 +22,14 @@ class AppAsset extends AssetBundle
     public $css = [
 //        'css/site.css',
         'css/styles.css',
-        'plugins/bootstrap/css/bootstrap.min.css',
-        'plugins/font-awesome/css/font-awesome.css',
+        'css/bootstrap/css/bootstrap.min.css',
+        'css/font-awesome/css/font-awesome.css',
     ];
     public $js = [
         'https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js',
         'https://oss.maxcdn.com/respond/1.4.2/respond.min.js',
         'plugins/jquery-1.11.3.min.js',
-        'plugins/bootstrap/js/bootstrap.min.js',
+        'css/bootstrap/js/bootstrap.min.js',
         'js/main.js',
     ];
     public $depends = [

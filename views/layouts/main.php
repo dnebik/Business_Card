@@ -28,9 +28,9 @@ AppAsset::register($this);
 <?php $this->beginBody() ?>
 
 
-<header>
-    <div class="nav" style="background-color: #1b6d85">sad</div>
-</header>
+<!--<header>-->
+<!--    <div class="nav" style="background-color: #1b6d85">sad</div>-->
+<!--</header>-->
 
 <!-- Javascript -->
 <!--    <script type="text/javascript" src="assets/plugins/jquery-1.11.3.min.js"></script>-->
