@@ -10,6 +10,6 @@ class ProfileController extends Controller
 {
     public function actionIndex()
     {
-        return $this->render('some');
+        return $this->render('index');
     }
 }

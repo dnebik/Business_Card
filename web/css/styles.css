@@ -8,7 +8,11 @@
 */
 /* styles.css */
 /* ======= Base ======= */
+html {
+  height: 100%;
+}
 body {
+  height: 100%;
   font-family: 'Roboto', sans-serif;
   color: #545E6C;
   background: #f5f5f5;
@@ -259,10 +263,23 @@ p {
 .footer .fa-heart {
   color: #fb866a;
 }
+
+.mWrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+.mFooter{
+  flex: 0 0 auto;
+}
+.content {
+  flex: 1 0 auto;
+}
+
 .tHead {
   width: 100%;
-  min-height: 400px;
-  height: 45vh;
+  min-height: 350px;
+  height: 75vh;
   position: relative;
   overflow: hidden;
   box-shadow: 0px 0px 7px 5px gray;
@@ -272,7 +289,7 @@ p {
   height: 100vw;
   background-color: powderblue;
   position: relative;
-  clip-path: polygon(0 0, 0 100%, 400px 100%, 700px 0)
+  clip-path: polygon(0 0, 0 100%, 2vmax 100%, 70vmax 0)
 }
 .tHead-text {
   font-size: 250%;
@@ -284,17 +301,29 @@ p {
   width: 240px;
 }
 .tHead-img {
-  width: 70vh;
+  width: 62vmax;
   min-width: 400px;
   right: 0px;
   position: absolute;
-  filter: blur(0.7px);
+  filter: blur(0.2px);
 }
 .tHead-button span{
   font-size: 140%;
   font-weight: bolder;
 }
 @media (max-width: 767px) {
+}
+@media (min-width: 950px) {
+  .tHead-space {
+
+  }
+}
+/* Extra small devices (phones, less than 768px) */
+@media (max-width: 767px) {
+
+  .tHead {
+    height: 50vh;
+  }
   .tHead-img {
     display: none;
   }
@@ -305,14 +334,7 @@ p {
     position: relative;
     clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 0)
   }
-}
-@media (min-width: 950px) {
-  .tHead-space {
 
-  }
-}
-/* Extra small devices (phones, less than 768px) */
-@media (max-width: 767px) {
   .sidebar-wrapper {
     position: static;
     width: inherit;

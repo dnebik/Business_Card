@@ -26,9 +26,17 @@ AppAsset::register($this);
 </head>
 <body>
 <?php $this->beginBody() ?>
+<div class="mWrapper">
 
-<?= $content ?>
+    <div class="content">
+        <?= $content ?>
+    </div>
 
+    <div class="mFooter">
+        &copy; Все права защищены или типа того
+    </div>
+</div>
+</body>
 <?php $this->endBody() ?>
 </body>
 </html>
