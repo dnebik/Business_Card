@@ -8,8 +8,9 @@ use yii\web\Controller;
 
 class ProfileController extends Controller
 {
-    public function actionIndex()
+    public function actionIndex($login = null)
     {
-        return $this->render('some');
+        error_log("login: " . $login);
+        return $this->render('index');
     }
 }

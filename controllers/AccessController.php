@@ -18,7 +18,6 @@ class AccessController extends Controller
         if ($model->load((Yii::$app->request->post()))) {
             $user = $model->login();
             if ($user) {
-                error_log("validate");
                 return $this->goHome();
             }
         }

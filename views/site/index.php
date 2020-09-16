@@ -1,3 +1,16 @@
+<?php
+
+use yii\helpers\Url;
+
+if (!Yii::$app->user->isGuest) {
+    $user = Yii::$app->user->getIdentity();
+    header("Location: " . Url::to(['/profile', 'user' => $user['login']]));
+    die();
+}
+
+?>
+
+
 <div class="header tHead">
     <img class="tHead-img" src="/img/template/example_card.jpeg">
     <div class="tHead-space"></div>
