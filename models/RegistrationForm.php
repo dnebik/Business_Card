@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use yii\base\Model;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "users".
@@ -13,17 +15,14 @@ use Yii;
  * @property string $last_name
  *
  */
-class RegistrationForm extends \yii\db\ActiveRecord
+class RegistrationForm extends Model
 {
     public $login;
     public $password;
     public $first_name;
     public $last_name;
 
-    public static function tableName()
-    {
-        return 'users';
-    }
+    private $_user = false;
 
     public function rules()
     {
@@ -31,15 +30,11 @@ class RegistrationForm extends \yii\db\ActiveRecord
             [['login', 'password', 'first_name', 'last_name'], 'required'],
             [['login', 'password'], 'string', 'max' => 255],
             [['first_name', 'last_name'], 'string', 'max' => 32],
-//            [['login'], 'unique'],
 
-            ['login', 'unique', 'message' => "«{value}» уже существует."]
+            ['login', 'unique', 'targetClass' => User::class, 'message' => "«{value}» уже существует."]
         ];
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function attributeLabels()
     {
         return [
@@ -48,5 +43,20 @@ class RegistrationForm extends \yii\db\ActiveRecord
             'first_name' => 'Имя',
             'last_name' => 'Фамилия',
         ];
+    }
+
+    public function registrate() {
+        if ($this->validate()) {
+            $user = new User();
+            $user->login = $this->login;
+            $user->password = Yii::$app->security->generatePasswordHash($this->password);
+            $user->first_name = $this->first_name;
+            $user->last_name = $this->last_name;
+            if ($user->save()) {
+                Yii::$app->user->login($user);
+                return $user;
+            }
+        }
+        return false;
     }
 }

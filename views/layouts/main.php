@@ -4,12 +4,9 @@
 
 /* @var $content string */
 
-use app\widgets\Alert;
 use yii\helpers\Html;
-use yii\bootstrap\Nav;
-use yii\bootstrap\NavBar;
-use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
+use yii\helpers\Url;
 
 AppAsset::register($this);
 ?>
@@ -26,30 +23,34 @@ AppAsset::register($this);
 </head>
 <body>
 <?php $this->beginBody() ?>
+<div class="mWrapper">
 
+    <nav class="navbar">
+        <span class="navbar-brand">YouCard</span>
+        <form class="form-inline">
+            <?
+            if (Yii::$app->user->isGuest) {
+                ?>
+                <a href="<?= Url::to("/access/login") ?>">
+                    <button class="btn btn-sm btn-info" type="button">Войти</button>
+                </a>
+            <? } else { ?>
+                <a href="<?= Url::to("/access/logout") ?>">
+                    <button class="btn btn-sm btn-info" type="button">Выйти</button>
+                </a>
+            <? } ?>
+        </form>
+    </nav>
 
-<!--<header>-->
-<!--    <div class="nav" style="background-color: #1b6d85">sad</div>-->
-<!--</header>-->
+    <div class="content" style="">
+        <?= $content ?>
+    </div>
 
-<!-- Javascript -->
-<!--    <script type="text/javascript" src="assets/plugins/jquery-1.11.3.min.js"></script>-->
-<!--    <script type="text/javascript" src="assets/plugins/bootstrap/js/bootstrap.min.js"></script>-->
-<!-- custom js -->
-<!--    <script type="text/javascript" src="assets/js/main.js"></script>-->
-
-
-<?= $content ?>
-
-<footer class="footer">
-    <div class="text-center">
-        <!--/* This template is released under the Creative Commons Attribution 3.0 License. Please keep the attribution link below when using for your own project. Thank you for your support. :) If you'd like to use the template without the attribution, you can check out other license options via our website: themes.3rdwavemedia.com */-->
-        <small class="copyright">Designed with <i class="fa fa-heart"></i> by <a href="http://themes.3rdwavemedia.com"
-                                                                                 target="_blank">Xiaoying Riley</a> for
-            developers</small>
-    </div><!--//container-->
-</footer><!--//footer-->
-
+    <div class="mFooter">
+        <span class="mFooter-captcha">Create with <span style="color: indianred">&hearts;</span> by dneb.</span>
+    </div>
+</div>
+</body>
 <?php $this->endBody() ?>
 </body>
 </html>

@@ -1,3 +1,14 @@
+/*======= AccessForm *=======*/
+
+// var help_block = $(".help-block");
+//
+// for (let i = 0; i < help_block['length']; i++) {
+//     if (help_block[i]['innerHTML'] == "") {
+//         help_block.get(i).remove();
+//     }
+//
+// }
+
 jQuery(document).ready(function($) {
     /*======= Skillset *=======*/
     $('.level-bar-inner').css('width', '0');

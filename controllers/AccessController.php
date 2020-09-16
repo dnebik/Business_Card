@@ -3,6 +3,8 @@
 
 namespace app\controllers;
 
+use app\models\LoginForm;
+use app\models\User;
 use yii\web\Controller;
 use app\models\RegistrationForm;
 use Yii;
@@ -11,25 +13,44 @@ class AccessController extends Controller
 {
 
     public function actionLogin() {
-        return $this->render("login");
+        $model = new LoginForm();
+        return $this->render("login", ["model" => $model]);
     }
 
     public function actionRegistration() {
 
+        if (!Yii::$app->user->isGuest) {
+            return $this->render('index');
+        }
+
         $model = new RegistrationForm();
 
-        if ($model->load(Yii::$app->request->post())) {
-            error_log(print_r($model, TRUE));
-        }
-        if ($model->load(Yii::$app->request->post()) && !$model->validate()) {
-            $errors = [];
-//            foreach ($model->getErrors() as $key => $value) {
-//                array_push($errors, [ $key => $value] );
-//            }
-            return $this->render("registration", ["model" => $model]);
+        if ($model->load(Yii::$app->request->post()) ) {
+            if (!$model->validate()) {
+                return $this->render("registration", ["model" => $model]);
+            } else {
+                $user = $model->registrate();
+                if ($user) {
+                    return $this->goHome();
+                }
+            }
         }
 
         return $this->render("registration", ["model" => $model]);
     }
 
+    public function actionLogout() {
+        Yii::$app->user->logout();
+        return $this->goHome();
+    }
+
+    public function actionIndex()
+    {
+        if (Yii::$app->user->isGuest)
+        {
+            return $this->render("login");
+        } else {
+            return $this->goHome();
+        }
+    }
 }
