@@ -134,7 +134,6 @@ $projectData = $connection->query($query)->fetch(PDO::FETCH_ASSOC);
                     </div><!--//level-bar-->
                 </div><!--//item-->
             <? endforeach; ?>
-
         </div>
     </section><!--//skills-section-->
 

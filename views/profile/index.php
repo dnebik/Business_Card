@@ -1,4 +1,14 @@
+<?php
 
+use app\models\User;
+use app\models\PersonalSkills;
+
+/* @var $user User */
+
+$skillsData = PersonalSkills::getAllUserSkills($user);
+error_log(print_r($skillsData, true));
+
+?>
 
 
 <div class="wrapper">
@@ -106,61 +116,30 @@
         <section class="skills-section section">
             <h2 class="section-title"><i class="fa fa-rocket"></i>Skills &amp; Proficiency</h2>
             <div class="skillset">
-                <div class="item">
-                    <h3 class="level-title">Python &amp; Django</h3>
-                    <div class="level-bar">
-                        <div class="level-bar-inner" data-level="98%">
-                        </div>
-                    </div><!--//level-bar-->
-                </div><!--//item-->
-
-                <div class="item">
-                    <h3 class="level-title">Javascript &amp; jQuery</h3>
-                    <div class="level-bar">
-                        <div class="level-bar-inner" data-level="98%">
-                        </div>
-                    </div><!--//level-bar-->
-                </div><!--//item-->
-
-                <div class="item">
-                    <h3 class="level-title">Angular</h3>
-                    <div class="level-bar">
-                        <div class="level-bar-inner" data-level="98%">
-                        </div>
-                    </div><!--//level-bar-->
-                </div><!--//item-->
-
-                <div class="item">
-                    <h3 class="level-title">HTML5 &amp; CSS</h3>
-                    <div class="level-bar">
-                        <div class="level-bar-inner" data-level="95%">
-                        </div>
-                    </div><!--//level-bar-->
-                </div><!--//item-->
-
-                <div class="item">
-                    <h3 class="level-title">Ruby on Rails</h3>
-                    <div class="level-bar">
-                        <div class="level-bar-inner" data-level="85%">
-                        </div>
-                    </div><!--//level-bar-->
-                </div><!--//item-->
-
-                <div class="item">
-                    <h3 class="level-title">Sketch &amp; Photoshop</h3>
-                    <div class="level-bar">
-                        <div class="level-bar-inner" data-level="60%">
-                        </div>
-                    </div><!--//level-bar-->
-                </div><!--//item-->
-
+                <table>
+                    <? foreach ($skillsData as $skill): ?>
+<!--                        <div class="item">-->
+                    <tr>
+                        <td>
+                            <h3 class="level-title"><?= $skill['skill']["name"] ?></h3>
+                        </td>
+                        <td class="w-100">
+                            <div class="level-bar">
+                                <div class="level-bar-inner" data-level="<?= $skill["percent"] ?>%">
+                                </div>
+                            </div>
+                        </td><!--//level-bar-->
+                    </tr>
+<!--                        </div>-->
+                    <? endforeach; ?>
+                </table>
             </div>
         </section><!--//skills-section-->
 
     </div><!--//main-body-->
     <div class="sidebar-wrapper">
         <div class="profile-container">
-            <img class="profile" src="images/profile.png" alt=""/>
+            <img class="profile" src="" alt=""/>
             <h1 class="name">Alan Doe</h1>
             <h3 class="tagline">Full Stack Developer</h3>
         </div><!--//profile-container-->
