@@ -1,12 +1,14 @@
 <?php
 
 use app\models\User;
+use app\models\LanguageKnowledge;
 use app\models\PersonalSkills;
 
 /* @var $user User */
 
 $skillsData = PersonalSkills::getAllUserSkills($user);
-error_log(print_r($skillsData, true));
+$languagesData = LanguageKnowledge::getAllUserKnowledge($user);
+error_log(print_r($languagesData, true));
 
 ?>
 
@@ -140,23 +142,20 @@ error_log(print_r($skillsData, true));
     <div class="sidebar-wrapper">
         <div class="profile-container">
             <img class="profile" src="" alt=""/>
-            <h1 class="name">Alan Doe</h1>
-            <h3 class="tagline">Full Stack Developer</h3>
+            <h1 class="name"><?= $user["first_name"] . " " . $user["last_name"] ?></h1>
+            <h3 class="tagline"><?= $user["post"] ?></h3>
         </div><!--//profile-container-->
 
         <div class="contact-container container-block">
             <ul class="list-unstyled contact-list">
-                <li class="email"><i class="fa fa-envelope"></i><a href="mailto: yourname@email.com">alan.doe@website.com</a>
-                </li>
-                <li class="phone"><i class="fa fa-phone"></i><a href="tel:0123 456 789">0123 456 789</a></li>
-                <li class="website"><i class="fa fa-globe"></i><a
-                            href="http://themes.3rdwavemedia.com/website-templates/free-responsive-website-template-for-developers/"
-                            target="_blank">portfoliosite.com</a></li>
-                <li class="linkedin"><i class="fa fa-linkedin"></i><a href="#"
-                                                                      target="_blank">linkedin.com/in/alandoe</a></li>
-                <li class="github"><i class="fa fa-github"></i><a href="#" target="_blank">github.com/username</a></li>
-                <li class="twitter"><i class="fa fa-twitter"></i><a href="https://twitter.com/3rdwave_themes"
-                                                                    target="_blank">@twittername</a></li>
+                <li class="email"><i class="fa fa-envelope"></i><a
+                            href="http://<?= $user["email"] ?>"><?= $user["email"] ?></a></li>
+                <li class="phone"><i class="fa fa-phone"></i><a
+                            href="tel:<?= $user["phone"] ?>"><?= $user["phone"] ?></a></li>
+                <li class="website"><i class="fa fa-globe"></i><a href="https://<?= $user["social"] ?>"
+                                                                  target="_blank"><?= $user["social"] ?></a></li>
+                <li class="github"><i class="fa fa-github"></i><a href="https://<?= $user["git"] ?>"
+                                                                  target="_blank"><?= $user["git"] ?></a></li>
             </ul>
         </div><!--//contact-container-->
         <div class="education-container container-block">
@@ -176,9 +175,9 @@ error_log(print_r($skillsData, true));
         <div class="languages-container container-block">
             <h2 class="container-block-title">Languages</h2>
             <ul class="list-unstyled interests-list">
-                <li>English <span class="lang-desc">(Native)</span></li>
-                <li>French <span class="lang-desc">(Professional)</span></li>
-                <li>Spanish <span class="lang-desc">(Professional)</span></li>
+                <? foreach ($languagesData as $language): ?>
+                    <li><?= $language["language"]['name'] ?> <span class="lang-desc">(<?= $language["level"]['name'] ?>)</span></li>
+                <? endforeach; ?>
             </ul>
         </div><!--//interests-->
 

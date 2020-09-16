@@ -28,7 +28,7 @@ class AccessController extends Controller
     public function actionRegistration() {
 
         if (!Yii::$app->user->isGuest) {
-            return $this->render('index');
+            return $this->goHome();
         }
 
         $model = new RegistrationForm();

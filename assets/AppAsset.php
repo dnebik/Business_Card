@@ -22,8 +22,8 @@ class AppAsset extends AssetBundle
     public $css = [
 //        'css/site.css',
         'css/styles.css',
-        'css/bootstrap/css/bootstrap.min.css',
-        'css/font-awesome/css/font-awesome.css',
+        'plugins/bootstrap/css/bootstrap.min.css',
+        'plugins/font-awesome/css/font-awesome.css',
     ];
     public $js = [
         'https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js',
