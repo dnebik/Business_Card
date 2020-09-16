@@ -2,6 +2,9 @@
     <img class="tHead-img" src="/img/template/example_card.jpeg">
     <div class="tHead-space"></div>
     <div class="tHead-triangle">
-        <b><span class="tHead-text">Ваше резюме онлайн</span></b>
+        <div class="tHead-text">
+            <b><span>Ваше резюме онлайн</span></b>
+            <button class="btn btn-success tHead-button"><span>Создать резюме</span></button>
+        </div>
     </div>
 </div>
