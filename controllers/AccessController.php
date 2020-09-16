@@ -14,6 +14,15 @@ class AccessController extends Controller
 
     public function actionLogin() {
         $model = new LoginForm();
+
+        if ($model->load((Yii::$app->request->post()))) {
+            $user = $model->login();
+            if ($user) {
+                error_log("validate");
+                return $this->goHome();
+            }
+        }
+
         return $this->render("login", ["model" => $model]);
     }
 
@@ -26,9 +35,7 @@ class AccessController extends Controller
         $model = new RegistrationForm();
 
         if ($model->load(Yii::$app->request->post()) ) {
-            if (!$model->validate()) {
-                return $this->render("registration", ["model" => $model]);
-            } else {
+            if ($model->validate()) {
                 $user = $model->registrate();
                 if ($user) {
                     return $this->goHome();

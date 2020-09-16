@@ -26,7 +26,7 @@ AppAsset::register($this);
 <div class="mWrapper">
 
     <nav class="navbar">
-        <span class="navbar-brand">YouCard</span>
+        <a href="<?=Url::to('/')?>"><span class="navbar-brand">YouCard</span></a>
         <form class="form-inline">
             <?
             if (Yii::$app->user->isGuest) {

@@ -8,7 +8,11 @@
 */
 /* styles.css */
 /* ======= Base ======= */
+html {
+  height: 100%;
+}
 body {
+  height: 100%;
   font-family: 'Roboto', sans-serif;
   color: #545E6C;
   background: #f5f5f5;
@@ -259,20 +263,81 @@ p {
 .footer .fa-heart {
   color: #fb866a;
 }
+
+.mWrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+.mFooter-captcha {
+  font-size: medium;
+  color: lightblue;
+}
+.mFooter{
+  height: 35px;
+  background-color: #1b6d85;
+  padding: 8px;
+  box-shadow: 0px 0px 5px 3px gray;
+  flex: 0 0 auto;
+  text-align: center;
+}
+.content {
+  flex: 1 0 auto;
+}
+.help-block {
+  background-color: #fd020221;
+  border-radius: 2px;
+  color: red;
+  margin-top: 5px;
+  padding: 5px 10px;
+}
+.navbar {
+  background-color: #1b6d85;
+  line-height: 1px;
+}
+.navbar .navbar-brand {
+  color: lightblue;
+}
+.navbar .btn {
+  font-size: 100%;
+  font-weight: bold;
+  padding: 3px 10px;
+}
+.iName {
+  display: flex;
+}
+.iName .iFName, .iSName {
+  flex: 0 1 auto;
+  width: 100%;
+  margin-bottom: 1rem;
+}
+.iName .iFName {
+  padding-right: 10px;
+}
+.accessForm {
+  margin-top: 2rem;
+}
+.accessCard {
+  max-width: 500px;
+  margin: 0 auto;
+  margin-bottom: 2rem;
+  float: none;
+}
 .tHead {
   width: 100%;
-  min-height: 400px;
-  height: 45vh;
+  min-height: 350px;
+  height: 75vh;
   position: relative;
   overflow: hidden;
-  box-shadow: 0px 0px 7px 5px gray;
+  margin-bottom: 30px;
+  box-shadow: 0px 4px 4px 0px lightgray;
 }
 .tHead-triangle {
   width: 100vw;
   height: 100vw;
   background-color: powderblue;
   position: relative;
-  clip-path: polygon(0 0, 0 100%, 400px 100%, 700px 0)
+  clip-path: polygon(0 0, 0 100%, 2vmax 100%, 70vmax 0)
 }
 .tHead-text {
   font-size: 250%;
@@ -281,38 +346,40 @@ p {
   display: block;
   top: 14vh;
   left: 10%;
-  width: 240px;
+  width: 270px;
 }
 .tHead-img {
-  width: 70vh;
+  width: 62vmax;
   min-width: 400px;
   right: 0px;
   position: absolute;
-  filter: blur(0.7px);
+  filter: blur(0.2px);
+  transform: translate(2px, -2px);
 }
 .tHead-button span{
   font-size: 140%;
   font-weight: bolder;
 }
+/* Extra small devices (phones, less than 768px) */
 @media (max-width: 767px) {
+
+  .tHead {
+    height: 30vh;
+  }
   .tHead-img {
     display: none;
   }
   .tHead-triangle {
     width: 100%;
     height: 100%;
-    background-color: powderblue;
-    position: relative;
-    clip-path: polygon(0 0, 0 100%, 100% 100%, 100% 0)
+    clip-path: none;
   }
-}
-@media (min-width: 950px) {
-  .tHead-space {
+  .tHead-text {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 
-  }
-}
-/* Extra small devices (phones, less than 768px) */
-@media (max-width: 767px) {
   .sidebar-wrapper {
     position: static;
     width: inherit;
