@@ -3,12 +3,19 @@
 use app\models\User;
 use app\models\LanguageKnowledge;
 use app\models\PersonalSkills;
+use app\models\Career;
+use app\models\Education;
+use app\models\PersonalInterest;
 
 /* @var $user User */
 
 $skillsData = PersonalSkills::getAllUserSkills($user);
 $languagesData = LanguageKnowledge::getAllUserKnowledge($user);
-error_log(print_r($languagesData, true));
+$careerData = Career::getUserCareer($user);
+$educationData = Education::getUserEducation($user);
+$interestsData = PersonalInterest::getUserInterests($user);
+
+error_log("data: " . print_r($interestsData, true));
 
 ?>
 
@@ -17,18 +24,14 @@ error_log(print_r($languagesData, true));
     <div class="main-wrapper">
 
         <section class="section summary-section">
-            <h2 class="section-title"><i class="fa fa-user"></i>Career Profile</h2>
+            <h2 class="section-title"><i class="fa fa-user"></i>О себе</h2>
             <div class="summary">
-                <p>Summarise your career here lorem ipsum dolor sit amet, consectetuer adipiscing elit. You can <a
-                            href="http://themes.3rdwavemedia.com/website-templates/orbit-free-resume-cv-template-for-developers/"
-                            target="_blank">download this free resume/CV template here</a>. Aenean commodo ligula eget
-                    dolor aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus
-                    mus. Donec quam felis, ultricies nec, pellentesque eu.</p>
+                <?= ($careerData['text'] == null) ? "<p><b>Нет информации.</b></p>" : $careerData["text"] ?>
             </div><!--//summary-->
         </section><!--//section-->
 
         <section class="section experiences-section">
-            <h2 class="section-title"><i class="fa fa-briefcase"></i>Experiences</h2>
+            <h2 class="section-title"><i class="fa fa-briefcase"></i>Опыт</h2>
 
             <div class="item">
                 <div class="meta">
@@ -83,7 +86,7 @@ error_log(print_r($languagesData, true));
         </section><!--//section-->
 
         <section class="section projects-section">
-            <h2 class="section-title"><i class="fa fa-archive"></i>Projects</h2>
+            <h2 class="section-title"><i class="fa fa-archive"></i>Проекты</h2>
             <div class="intro">
                 <p>You can list your side projects or open source libraries in this section. Lorem ipsum dolor sit amet,
                     consectetur adipiscing elit. Vestibulum et ligula in nunc bibendum fringilla a eu lectus.</p>
@@ -116,7 +119,7 @@ error_log(print_r($languagesData, true));
         </section><!--//section-->
 
         <section class="skills-section section">
-            <h2 class="section-title"><i class="fa fa-rocket"></i>Skills &amp; Proficiency</h2>
+            <h2 class="section-title"><i class="fa fa-rocket"></i>Навыки &amp; Умения</h2>
             <div class="skillset">
                 <table>
                     <? foreach ($skillsData as $skill): ?>
@@ -159,21 +162,18 @@ error_log(print_r($languagesData, true));
             </ul>
         </div><!--//contact-container-->
         <div class="education-container container-block">
-            <h2 class="container-block-title">Education</h2>
-            <div class="item">
-                <h4 class="degree">MSc in Computer Science</h4>
-                <h5 class="meta">University of London</h5>
-                <div class="time">2011 - 2012</div>
-            </div><!--//item-->
-            <div class="item">
-                <h4 class="degree">BSc in Applied Mathematics</h4>
-                <h5 class="meta">Bristol University</h5>
-                <div class="time">2007 - 2011</div>
-            </div><!--//item-->
+            <h2 class="container-block-title">Образование</h2>
+            <? foreach ($educationData as $item): ?>
+                <div class="item">
+                    <h4 class="degree"><?= $item["faculty"]["name"] ?></h4>
+                    <h5 class="meta"><?= $item["university"]["name"] ?></h5>
+                    <div class="time"><?= $item["year_start"] ?> - <?= $item["year_end"] ?></div>
+                </div><!--//item-->
+            <? endforeach ?>
         </div><!--//education-container-->
 
         <div class="languages-container container-block">
-            <h2 class="container-block-title">Languages</h2>
+            <h2 class="container-block-title">Языки</h2>
             <ul class="list-unstyled interests-list">
                 <? foreach ($languagesData as $language): ?>
                     <li><?= $language["language"]['name'] ?> <span class="lang-desc">(<?= $language["level"]['name'] ?>)</span></li>
@@ -182,11 +182,11 @@ error_log(print_r($languagesData, true));
         </div><!--//interests-->
 
         <div class="interests-container container-block">
-            <h2 class="container-block-title">Interests</h2>
+            <h2 class="container-block-title">Интересы</h2>
             <ul class="list-unstyled interests-list">
-                <li>Climbing</li>
-                <li>Snowboarding</li>
-                <li>Cooking</li>
+                <? foreach ($interestsData as $interest): ?>
+                    <li><?= $interest["inerest"]["name"] ?></li>
+                <? endforeach; ?>
             </ul>
         </div><!--//interests-->
     </div><!--//sidebar-wrapper-->
