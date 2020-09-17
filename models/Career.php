@@ -61,6 +61,6 @@ class Career extends \yii\db\ActiveRecord
     }
 
     public static function getUserCareer(User $user) {
-        return self::find()->joinWith('user')->where(['id_user' => $user->id])->asArray()->one();
+        return self::find()->where(['id_user' => $user->id])->asArray()->one();
     }
 }
