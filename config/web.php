@@ -7,7 +7,7 @@ $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
-//    'defaultRoute' => '/profile/index',
+    'language' => 'ru',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
@@ -45,13 +45,15 @@ $config = [
             ],
         ],
         'db' => $db,
+//        /*
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-
+                '<user>' => 'profile/',
             ],
         ],
+//        */
     ],
     'params' => $params,
 ];
@@ -69,7 +71,7 @@ if (YII_ENV_DEV) {
     $config['modules']['gii'] = [
         'class' => 'yii\gii\Module',
         // uncomment the following to add your IP if you are not connecting from localhost.
-        //'allowedIPs' => ['127.0.0.1', '::1'],
+        'allowedIPs' => ['127.0.0.1', '::1', '*'],
     ];
 }
 

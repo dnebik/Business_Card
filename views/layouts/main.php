@@ -4,12 +4,9 @@
 
 /* @var $content string */
 
-use app\widgets\Alert;
 use yii\helpers\Html;
-use yii\bootstrap\Nav;
-use yii\bootstrap\NavBar;
-use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
+use yii\helpers\Url;
 
 AppAsset::register($this);
 ?>
@@ -28,12 +25,29 @@ AppAsset::register($this);
 <?php $this->beginBody() ?>
 <div class="mWrapper">
 
-    <div class="content">
+    <nav class="navbar">
+        <a href="<?=Url::to('/')?>"><span class="navbar-brand">YouCard</span></a>
+        <form class="form-inline">
+            <?
+            if (Yii::$app->user->isGuest) {
+                ?>
+                <a href="<?= Url::to("/access/login") ?>">
+                    <button class="btn btn-sm btn-info" type="button">Войти</button>
+                </a>
+            <? } else { ?>
+                <a href="<?= Url::to("/access/logout") ?>">
+                    <button class="btn btn-sm btn-info" type="button">Выйти</button>
+                </a>
+            <? } ?>
+        </form>
+    </nav>
+
+    <div class="content" style="">
         <?= $content ?>
     </div>
 
     <div class="mFooter">
-        &copy; Все права защищены или типа того
+        <span class="mFooter-captcha">Create with <span style="color: indianred">&hearts;</span> by dneb.</span>
     </div>
 </div>
 </body>
