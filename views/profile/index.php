@@ -5,6 +5,7 @@ use app\models\LanguageKnowledge;
 use app\models\PersonalSkills;
 use app\models\Career;
 use app\models\Education;
+use app\models\PersonalInterest;
 
 /* @var $user User */
 
@@ -12,8 +13,9 @@ $skillsData = PersonalSkills::getAllUserSkills($user);
 $languagesData = LanguageKnowledge::getAllUserKnowledge($user);
 $careerData = Career::getUserCareer($user);
 $educationData = Education::getUserEducation($user);
+$interestsData = PersonalInterest::getUserInterests($user);
 
-error_log("data: " . print_r($educationData, true));
+error_log("data: " . print_r($interestsData, true));
 
 ?>
 
@@ -22,14 +24,14 @@ error_log("data: " . print_r($educationData, true));
     <div class="main-wrapper">
 
         <section class="section summary-section">
-            <h2 class="section-title"><i class="fa fa-user"></i>Career Profile</h2>
+            <h2 class="section-title"><i class="fa fa-user"></i>О себе</h2>
             <div class="summary">
-                <?= ($careerData['text'] == null) ? "<p><b>Нет данных о карьере.</b></p>" : $careerData["text"] ?>
+                <?= ($careerData['text'] == null) ? "<p><b>Нет информации.</b></p>" : $careerData["text"] ?>
             </div><!--//summary-->
         </section><!--//section-->
 
         <section class="section experiences-section">
-            <h2 class="section-title"><i class="fa fa-briefcase"></i>Experiences</h2>
+            <h2 class="section-title"><i class="fa fa-briefcase"></i>Опыт</h2>
 
             <div class="item">
                 <div class="meta">
@@ -84,7 +86,7 @@ error_log("data: " . print_r($educationData, true));
         </section><!--//section-->
 
         <section class="section projects-section">
-            <h2 class="section-title"><i class="fa fa-archive"></i>Projects</h2>
+            <h2 class="section-title"><i class="fa fa-archive"></i>Проекты</h2>
             <div class="intro">
                 <p>You can list your side projects or open source libraries in this section. Lorem ipsum dolor sit amet,
                     consectetur adipiscing elit. Vestibulum et ligula in nunc bibendum fringilla a eu lectus.</p>
@@ -117,7 +119,7 @@ error_log("data: " . print_r($educationData, true));
         </section><!--//section-->
 
         <section class="skills-section section">
-            <h2 class="section-title"><i class="fa fa-rocket"></i>Skills &amp; Proficiency</h2>
+            <h2 class="section-title"><i class="fa fa-rocket"></i>Навыки &amp; Умения</h2>
             <div class="skillset">
                 <table>
                     <? foreach ($skillsData as $skill): ?>
@@ -160,7 +162,7 @@ error_log("data: " . print_r($educationData, true));
             </ul>
         </div><!--//contact-container-->
         <div class="education-container container-block">
-            <h2 class="container-block-title">Education</h2>
+            <h2 class="container-block-title">Образование</h2>
             <? foreach ($educationData as $item): ?>
                 <div class="item">
                     <h4 class="degree"><?= $item["faculty"]["name"] ?></h4>
@@ -171,7 +173,7 @@ error_log("data: " . print_r($educationData, true));
         </div><!--//education-container-->
 
         <div class="languages-container container-block">
-            <h2 class="container-block-title">Languages</h2>
+            <h2 class="container-block-title">Языки</h2>
             <ul class="list-unstyled interests-list">
                 <? foreach ($languagesData as $language): ?>
                     <li><?= $language["language"]['name'] ?> <span class="lang-desc">(<?= $language["level"]['name'] ?>)</span></li>
@@ -180,11 +182,11 @@ error_log("data: " . print_r($educationData, true));
         </div><!--//interests-->
 
         <div class="interests-container container-block">
-            <h2 class="container-block-title">Interests</h2>
+            <h2 class="container-block-title">Интересы</h2>
             <ul class="list-unstyled interests-list">
-                <li>Climbing</li>
-                <li>Snowboarding</li>
-                <li>Cooking</li>
+                <? foreach ($interestsData as $interest): ?>
+                    <li><?= $interest["inerest"]["name"] ?></li>
+                <? endforeach; ?>
             </ul>
         </div><!--//interests-->
     </div><!--//sidebar-wrapper-->
