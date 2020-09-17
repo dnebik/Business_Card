@@ -3,12 +3,15 @@
 use app\models\User;
 use app\models\LanguageKnowledge;
 use app\models\PersonalSkills;
+use app\models\Career;
 
 /* @var $user User */
 
 $skillsData = PersonalSkills::getAllUserSkills($user);
 $languagesData = LanguageKnowledge::getAllUserKnowledge($user);
-error_log(print_r($languagesData, true));
+$careerData = Career::getUserCareer($user);
+
+error_log("data: " . print_r($careerData, true));
 
 ?>
 
@@ -19,11 +22,7 @@ error_log(print_r($languagesData, true));
         <section class="section summary-section">
             <h2 class="section-title"><i class="fa fa-user"></i>Career Profile</h2>
             <div class="summary">
-                <p>Summarise your career here lorem ipsum dolor sit amet, consectetuer adipiscing elit. You can <a
-                            href="http://themes.3rdwavemedia.com/website-templates/orbit-free-resume-cv-template-for-developers/"
-                            target="_blank">download this free resume/CV template here</a>. Aenean commodo ligula eget
-                    dolor aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus
-                    mus. Donec quam felis, ultricies nec, pellentesque eu.</p>
+                <?= ($careerData['text'] == null) ? "<p><b>Нет данных о карьере.</b></p>" : $careerData["text"] ?>
             </div><!--//summary-->
         </section><!--//section-->
 
