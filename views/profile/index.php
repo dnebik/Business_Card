@@ -4,14 +4,16 @@ use app\models\User;
 use app\models\LanguageKnowledge;
 use app\models\PersonalSkills;
 use app\models\Career;
+use app\models\Education;
 
 /* @var $user User */
 
 $skillsData = PersonalSkills::getAllUserSkills($user);
 $languagesData = LanguageKnowledge::getAllUserKnowledge($user);
 $careerData = Career::getUserCareer($user);
+$educationData = Education::getUserEducation($user);
 
-error_log("data: " . print_r($careerData, true));
+error_log("data: " . print_r($educationData, true));
 
 ?>
 
@@ -159,16 +161,13 @@ error_log("data: " . print_r($careerData, true));
         </div><!--//contact-container-->
         <div class="education-container container-block">
             <h2 class="container-block-title">Education</h2>
-            <div class="item">
-                <h4 class="degree">MSc in Computer Science</h4>
-                <h5 class="meta">University of London</h5>
-                <div class="time">2011 - 2012</div>
-            </div><!--//item-->
-            <div class="item">
-                <h4 class="degree">BSc in Applied Mathematics</h4>
-                <h5 class="meta">Bristol University</h5>
-                <div class="time">2007 - 2011</div>
-            </div><!--//item-->
+            <? foreach ($educationData as $item): ?>
+                <div class="item">
+                    <h4 class="degree"><?= $item["faculty"]["name"] ?></h4>
+                    <h5 class="meta"><?= $item["university"]["name"] ?></h5>
+                    <div class="time"><?= $item["year_start"] ?> - <?= $item["year_end"] ?></div>
+                </div><!--//item-->
+            <? endforeach ?>
         </div><!--//education-container-->
 
         <div class="languages-container container-block">
