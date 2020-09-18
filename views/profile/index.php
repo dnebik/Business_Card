@@ -8,6 +8,7 @@ use app\models\Education;
 use app\models\PersonalInterest;
 use app\models\Experience;
 use app\models\Projects;
+use yii\helpers\Url;
 
 /* @var $user User */
 
@@ -18,8 +19,6 @@ $educationData = Education::getUserEducation($user);
 $interestsData = PersonalInterest::getUserInterests($user);
 $experiencesData = Experience::getUserExperience($user);
 $projectData = Projects::getUserProjects($user);
-
-error_log("data: " . print_r($interestsData, true));
 
 ?>
 
@@ -111,9 +110,11 @@ error_log("data: " . print_r($interestsData, true));
     </div><!--//main-body-->
     <div class="sidebar-wrapper">
         <div class="profile-container">
-            <? if ($user['login'] == Yii::$app->request->post()['user']) {
+            <? if ($user->login == Yii::$app->user->getIdentity()['login']) {
                 ?>
-                <i class="fa fa-cog" aria-hidden="true"></i>
+                    <div class="setting-ico">
+                        <a href="<?= Url::to('/settings') ?>"><i class="fa fa-cog" aria-hidden="true"></i></a>
+                    </div>
                 <?
             } ?>
             <img class="profile" src="" alt=""/>
@@ -134,12 +135,12 @@ error_log("data: " . print_r($interestsData, true));
                                     href="tel:<?= $user["phone"] ?>"><?= $user["phone"] ?></a></li>
                     <? } ?>
                     <? if ($user['social']) { ?>
-                        <li class="website"><i class="fa fa-globe"></i><a href="https://<?= $user["social"] ?>"
+                        <li class="website"><i class="fa fa-globe"></i><a href="<?= $user["social"] ?>"
                                                                           target="_blank"><?= substr(strrchr($user['social'],
                                     '/'), 1) ?></a></li>
                     <? } ?>
                     <? if ($user['git']) { ?>
-                        <li class="github"><i class="fa fa-github"></i><a href="https://<?= $user["git"] ?>"
+                        <li class="github"><i class="fa fa-github"></i><a href="<?= $user["git"] ?>"
                                                                           target="_blank"><?= substr(strrchr($user['git'],
                                     '/'),
                                     1) ?></a></li>

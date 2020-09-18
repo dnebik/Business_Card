@@ -23,6 +23,7 @@ $config = [
         ],
         'user' => [
             'identityClass' => 'app\models\User',
+            'loginUrl' => ['access/login'],
             'enableAutoLogin' => true,
         ],
         'errorHandler' => [
@@ -50,7 +51,7 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                '<user>' => 'profile/',
+                '<login:\b(?:(?!settings)\w)+\b>' => 'profile/',
             ],
         ],
 //        */

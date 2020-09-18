@@ -9,9 +9,12 @@ use yii\web\Controller;
 
 class ProfileController extends Controller
 {
-    public function actionIndex($user = null)
+    public function actionIndex($login = null)
     {
-        $user = User::findByLogin($user);
+        $user = User::findByLogin($login);
+        if (!$user) {
+            return $this->render('nonexistent', ['login' => $login]);
+        }
         return $this->render('index', ['user' => $user]);
     }
 }

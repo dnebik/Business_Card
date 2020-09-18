@@ -30,6 +30,7 @@ class RegistrationForm extends Model
             [['login', 'password', 'first_name', 'last_name'], 'required'],
             [['login', 'password'], 'string', 'max' => 255],
             [['first_name', 'last_name'], 'string', 'max' => 32],
+            ['login', 'compare', 'compareValue' => 'settings', 'operator' => '!=', 'type' => 'string'],
 
             ['login', 'unique', 'targetClass' => User::class, 'message' => "«{value}» уже существует."]
         ];

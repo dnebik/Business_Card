@@ -4,7 +4,7 @@ use yii\helpers\Url;
 
 if (!Yii::$app->user->isGuest) {
     $user = Yii::$app->user->getIdentity();
-    header("Location: " . Url::to(['/profile', 'user' => $user['login']]));
+    header("Location: " . Url::to(['/profile', 'login' => $user['login']]));
     die();
 }
 
@@ -17,7 +17,7 @@ if (!Yii::$app->user->isGuest) {
     <div class="tHead-triangle">
         <div class="tHead-text">
             <b><span>Ваше резюме онлайн</span></b>
-            <button class="btn btn-success tHead-button"><span>Создать резюме</span></button>
+            <a href="<?= Url::to('/access/registration') ?>" class="btn btn-success tHead-button"><span>Создать резюме</span></a>
         </div>
     </div>
 </div>

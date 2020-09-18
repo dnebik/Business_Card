@@ -65,6 +65,7 @@ p {
   min-height: 800px;
   color: #fff;
   display: table-cell;
+  padding-bottom: 2rem;
 }
 .sidebar-wrapper a {
   color: #fff;
@@ -293,6 +294,17 @@ p {
   margin-top: 5px;
   padding: 5px 10px;
 }
+.setting-ico {
+  position: relative;
+  display: block; !important;
+  width: max-content;
+  margin: -24px -18px 0 0;
+  float: right;
+  font-size: x-large;
+}
+.fa {
+  display: none; !important;
+}
 .navbar {
   background-color: #1b6d85;
   line-height: 1px;
@@ -316,14 +328,20 @@ p {
 .iName .iFName {
   padding-right: 10px;
 }
-.accessForm {
+.accessForm, .settingsForm {
   margin-top: 2rem;
 }
-.accessCard {
-  max-width: 500px;
+.accessCard, .settingsCard {
   margin: 0 auto;
   margin-bottom: 2rem;
   float: none;
+}
+.accessCard {
+  max-width: 500px;
+}
+.settingsCard {
+  max-width: 800px;
+  color: #2d7788;
 }
 .tHead {
   width: 100%;
