@@ -6,6 +6,7 @@ use app\models\PersonalSkills;
 use app\models\Career;
 use app\models\Education;
 use app\models\PersonalInterest;
+use app\models\Experience;
 
 /* @var $user User */
 
@@ -14,6 +15,7 @@ $languagesData = LanguageKnowledge::getAllUserKnowledge($user);
 $careerData = Career::getUserCareer($user);
 $educationData = Education::getUserEducation($user);
 $interestsData = PersonalInterest::getUserInterests($user);
+$experiencesData = Experience::getUserExperience($user);
 
 error_log("data: " . print_r($interestsData, true));
 
@@ -32,56 +34,27 @@ error_log("data: " . print_r($interestsData, true));
 
         <section class="section experiences-section">
             <h2 class="section-title"><i class="fa fa-briefcase"></i>Опыт</h2>
-
-            <div class="item">
-                <div class="meta">
-                    <div class="upper-row">
-                        <h3 class="job-title">Lead Developer</h3>
-                        <div class="time">2015 - Present</div>
-                    </div><!--//upper-row-->
-                    <div class="company">Startup Hubs, San Francisco</div>
-                </div><!--//meta-->
-                <div class="details">
-                    <p>Describe your role here lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo
-                        ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,
-                        nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.
-                        Nulla consequat massa quis enim. Donec pede justo.</p>
-                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
-                        totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae
-                        dicta sunt explicabo. </p>
-                </div><!--//details-->
-            </div><!--//item-->
-
-            <div class="item">
-                <div class="meta">
-                    <div class="upper-row">
-                        <h3 class="job-title">Senior Software Engineer</h3>
-                        <div class="time">2014 - 2015</div>
-                    </div><!--//upper-row-->
-                    <div class="company">Google, London</div>
-                </div><!--//meta-->
-                <div class="details">
-                    <p>Describe your role here lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo
-                        ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,
-                        nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.</p>
-
-                </div><!--//details-->
-            </div><!--//item-->
-
-            <div class="item">
-                <div class="meta">
-                    <div class="upper-row">
-                        <h3 class="job-title">UI Developer</h3>
-                        <div class="time">2012 - 2014</div>
-                    </div><!--//upper-row-->
-                    <div class="company">Amazon, London</div>
-                </div><!--//meta-->
-                <div class="details">
-                    <p>Describe your role here lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo
-                        ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,
-                        nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.</p>
-                </div><!--//details-->
-            </div><!--//item-->
+            <?
+            if ($experiencesData == null)
+                echo "<p><b>Нет опыта работы.</b></p>";
+            else{
+                ?>
+                <? foreach ($experiencesData as $experience): ?>
+                    <div class="item">
+                        <div class="meta">
+                            <div class="upper-row">
+                                <h3 class="job-title"><?= $experience["position"] ?></h3>
+                                <div class="time"><?= $experience["year_start"] ?> - <?= ($experience["year_end"] == null) ? "nowadays" : $experience["year_end"] ?></div>
+                            </div><!--//upper-row-->
+                            <div class="company"><?= $experience["place"] ?></div>
+                        </div><!--//meta-->
+                        <? if ($experience["description"] != null){ ?>
+                            <div class="details">
+                                <?= $experience["description"] ?>
+                            </div><!--//details-->
+                        <? } ?>
+                    </div><!--//item-->
+                <? endforeach; }?>
 
         </section><!--//section-->
 
@@ -156,9 +129,9 @@ error_log("data: " . print_r($interestsData, true));
                 <li class="phone"><i class="fa fa-phone"></i><a
                             href="tel:<?= $user["phone"] ?>"><?= $user["phone"] ?></a></li>
                 <li class="website"><i class="fa fa-globe"></i><a href="https://<?= $user["social"] ?>"
-                                                                  target="_blank"><?= $user["social"] ?></a></li>
+                                                                  target="_blank"><?= substr(strrchr($user['social'], '/'), 1) ?></a></li>
                 <li class="github"><i class="fa fa-github"></i><a href="https://<?= $user["git"] ?>"
-                                                                  target="_blank"><?= $user["git"] ?></a></li>
+                                                                  target="_blank"><?= substr(strrchr($user['git'], '/'), 1) ?></a></li>
             </ul>
         </div><!--//contact-container-->
         <div class="education-container container-block">
