@@ -24,6 +24,8 @@ $interestsData = PersonalInterest::getUserInterests($user);
 $experiencesData = Experience::getUserExperience($user);
 $projectData = Projects::getUserProjects($user);
 
+$model->career = $careerData['text'];
+
 ?>
 
 <div class="container settingsForm">
@@ -43,6 +45,9 @@ $projectData = Projects::getUserProjects($user);
                 "phone" => [
                     'errorOptions' => ['tag' => false],
                 ],
+                "career" => [
+                    'errorOptions' => ['tag' => false],
+                ],
             ];
 
             //убираем отображение ошибки валидации у прошедших валидацию полей
@@ -56,17 +61,18 @@ $projectData = Projects::getUserProjects($user);
 
             <?php $form = ActiveForm::begin(); ?>
 
-            <?= $form->field($model, 'email', $options['email'])->textInput(['value' => $user->email]) ?>
-            <?= $form->field($model, 'phone', $options['phone'])->textInput(['value' => $user->phone]) ?>
+            <?= $form->field($model, 'email', $options['email'])->input('email', ['value' => $user->email]) ?>
+            <?= $form->field($model, 'phone', $options['phone'])->input('tel',
+                ['value' => $user->phone, 'pattern' => "^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$"]) ?>
             <?= $form->field($model, 'social', $options['email'])->textInput(['value' => $user->social]) ?>
             <?= $form->field($model, 'git', $options['email'])->textInput(['value' => $user->git]) ?>
+            <?= $form->field($model, 'career', $options['career'])->textarea(['class' => 'textarea', 'hidden' => 'true']) ?>
 
             <div class="form-group">
                 <?= Html::submitButton('Сохранить', ['class' => 'btn btn-info']) ?>
             </div>
 
             <?php ActiveForm::end(); ?>
-
 
         </div>
     </div>

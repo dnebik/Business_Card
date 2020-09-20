@@ -13,6 +13,11 @@ class User extends ActiveRecord implements IdentityInterface
         return 'users';
     }
 
+    public function getCareer()
+    {
+        return $this->hasOne(Career::class, ['id_user' => 'id']);
+    }
+
     public static function findIdentity($id)
     {
         return self::find()->where(['id' => $id])->one();

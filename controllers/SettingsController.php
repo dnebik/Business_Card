@@ -3,6 +3,7 @@
 
 namespace app\controllers;
 
+use app\models\Career;
 use app\models\SettingsForm;
 use yii\web\Controller;
 use yii\filters\AccessControl;
@@ -47,10 +48,21 @@ class SettingsController extends Controller
 
         if ($model->load(Yii::$app->request->post()) ) {
             if ($model->validate()) {
+                error_log(print_r($model, true));
                 $user->email = $model->email;
                 $user->phone = $model->phone;
                 $user->git = $model->git;
                 $user->social = $model->social;
+
+                $career = Career::getCareerByUser($user);
+                if (!$career) {
+                    $career = new Career();
+                    $career->id_user = $user->id;
+                }
+                $career->text = $model->career;
+
+
+                $career->save();
                 $user->save();
             }
         }

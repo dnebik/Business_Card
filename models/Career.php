@@ -60,6 +60,10 @@ class Career extends \yii\db\ActiveRecord
         return $this->hasOne(User::class, ['id' => 'id_user']);
     }
 
+    public static function getCareerByUser(User $user) {
+        return self::findOne(['id_user' => $user->id]);
+    }
+
     public static function getUserCareer(User $user) {
         return self::find()->where(['id_user' => $user->id])->asArray()->one();
     }

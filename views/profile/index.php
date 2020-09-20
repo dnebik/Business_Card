@@ -29,7 +29,7 @@ $projectData = Projects::getUserProjects($user);
         <section class="section summary-section">
             <h2 class="section-title"><i class="fa fa-user"></i>О себе</h2>
             <div class="summary">
-                <?= ($careerData['text'] == null) ? "<p><b>Нет информации о себе.</b></p>" : $careerData["text"] ?>
+                <?= (!strip_tags($careerData['text'])) ? "<p><b>Нет информации о себе.</b></p>" : $careerData["text"] ?>
             </div><!--//summary-->
         </section><!--//section-->
 

@@ -12,10 +12,12 @@ class SettingsForm extends Model
     public $phone;
     public $social;
     public $git;
+    public $career;
 
     public function rules()
     {
         return [
+            [['career'], 'string', 'max' => 1000],
             [['phone'], 'string', 'max' => 20],
             [['phone'], 'match', 'pattern' => '/^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$/',
                 'message' => 'Не верно введён номер телефона.'],
@@ -23,7 +25,7 @@ class SettingsForm extends Model
             [['email'], 'match', 'pattern' => '/.+@.+\..+/i', 'message' => 'Не верно заполненное поле «E-mail».'],
             [['social', 'git'], 'string', 'max' => 255],
             [['social', 'git'], 'match',
-                'pattern' => '/^[(http:\/\/)|(https:\/\/)](([a-z0-9\-\.]+)?[a-z0-9\-]+(!?\.[a-z]{2,4}))/',
+                'pattern' => '/[(http:\/\/)|(https:\/\/)].+\..+/',
                 'message' => 'Не верно заполненное поле «{attribute}».'],
         ];
     }

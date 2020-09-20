@@ -1,14 +1,3 @@
-/*======= AccessForm *=======*/
-
-// var help_block = $(".help-block");
-//
-// for (let i = 0; i < help_block['length']; i++) {
-//     if (help_block[i]['innerHTML'] == "") {
-//         help_block.get(i).remove();
-//     }
-//
-// }
-
 jQuery(document).ready(function($) {
     /*======= Skillset *=======*/
     $('.level-bar-inner').css('width', '0');
@@ -21,6 +10,26 @@ jQuery(document).ready(function($) {
         });
     });
 });
+
+var editor = new MediumEditor('.textarea', {
+    targetBlank: true,
+    sticky: true,
+    toolbar: {
+        buttons: ['bold', 'italic', 'underline', 'anchor'],
+        diffLeft: 25,
+        diffTop: 10,
+    },
+    extensions: {
+        'imageDragging': {}
+    },
+    placeholder: {
+        text: 'Введите свое описание.',
+        hideOnClick: true
+    }
+});
+var el = $('.medium-editor-element');
+el[0].hidden = false;
+
 
 $(window).on('resize', function() {
     $('.tHead-space').width($(window).width() - 950);
