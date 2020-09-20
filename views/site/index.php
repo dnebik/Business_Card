@@ -17,7 +17,7 @@ if (!Yii::$app->user->isGuest) {
     <div class="tHead-triangle">
         <div class="tHead-text">
             <b><span>Ваше резюме онлайн</span></b>
-            <a href="<?= Url::to('/access/registration') ?>" class="btn btn-success tHead-button"><span>Создать резюме</span></a>
+            <a href="<?= Url::to('/registration') ?>" class="btn btn-success tHead-button"><span>Создать резюме</span></a>
         </div>
     </div>
 </div>

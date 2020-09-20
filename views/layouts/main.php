@@ -31,7 +31,7 @@ AppAsset::register($this);
             <?
             if (Yii::$app->user->isGuest) {
                 ?>
-                <a href="<?= Url::to("/access/login") ?>">
+                <a href="<?= Url::to("/login") ?>">
                     <button class="btn btn-sm btn-info" type="button">Войти</button>
                 </a>
             <? } else { ?>

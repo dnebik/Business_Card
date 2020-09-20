@@ -26,14 +26,31 @@ class RegistrationForm extends Model
 
     public function rules()
     {
-        return [
-            [['login', 'password', 'first_name', 'last_name'], 'required'],
-            [['login', 'password'], 'string', 'max' => 255],
-            [['first_name', 'last_name'], 'string', 'max' => 32],
-            ['login', 'compare', 'compareValue' => 'settings', 'operator' => '!=', 'type' => 'string'],
+        $systemArgs = ['login', 'registration', 'settings'];
 
+        $compare = [
+            [['login', 'password', 'first_name', 'last_name'], 'required'],
+
+            [['first_name', 'last_name'], 'string', 'max' => 32],
+
+            ['password', 'string', 'max' => 255, 'min' => 6],
+
+            ['login', 'string', 'max' => 25, 'min' => 4],
+            ['login', 'match', 'pattern' => '/^([A-Z]|[a-z])+([_-])?([A-Z]|[a-z])*$/', 'message' => '«{attribute}» должен содержать только латинские буквы и разделители \'_-\''],
             ['login', 'unique', 'targetClass' => User::class, 'message' => "«{value}» уже существует."]
         ];
+
+        foreach ($systemArgs as $arg) {
+              array_push($compare, [
+                  'login',
+                  'compare',
+                  'compareValue' => $arg,
+                  'operator' => '!=',
+                  'type' => 'string',
+                  'message' => 'значение «{value}» зарезервированно системой.']);
+        };
+
+        return $compare;
     }
 
     public function attributeLabels()

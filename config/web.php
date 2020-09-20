@@ -51,7 +51,8 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                '<login:\b(?:(?!settings)\w)+\b>' => 'profile/',
+                '<login:\b(?:(?!(settings|login|registration))\w)+\b>' => 'profile/',
+                '/<action>' => 'access/<action>',
             ],
         ],
 //        */
