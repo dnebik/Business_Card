@@ -21,11 +21,11 @@ class AppAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
 //        'css/site.css',
-        'css/styles.css',
         'plugins/bootstrap/css/bootstrap.min.css',
-        'plugins/font-awesome/css/font-awesome.css',
         'plugins/medium-editor/css/medium-editor.css',
         'plugins/medium-editor/css/themes/bootstrap.css',
+        'css/styles.css',
+        'plugins/font-awesome/css/font-awesome.css',
     ];
     public $js = [
         'https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js',

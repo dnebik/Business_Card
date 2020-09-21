@@ -52,7 +52,7 @@ $config = [
             'showScriptName' => false,
             'rules' => [
                 '<login:\b(?:(?!(settings|login|registration))\w)+\b>' => 'profile/',
-                '/<action>' => 'access/<action>',
+                '/<action:\b(?:(?!(settings))\w)+\b>' => 'access/<action>',
             ],
         ],
 //        */

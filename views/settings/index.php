@@ -9,6 +9,7 @@ use app\models\Experience;
 use app\models\Projects;
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
+use app\models\LevelOfKnowledge;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\LoginForm */
@@ -18,11 +19,14 @@ $user = Yii::$app->user->getIdentity();
 
 $skillsData = PersonalSkills::getAllUserSkills($user);
 $languagesData = LanguageKnowledge::getAllUserKnowledge($user);
+$languageLevelData = LevelOfKnowledge::getAllLevels();
 $careerData = Career::getUserCareer($user);
 $educationData = Education::getUserEducation($user);
 $interestsData = PersonalInterest::getUserInterests($user);
 $experiencesData = Experience::getUserExperience($user);
 $projectData = Projects::getUserProjects($user);
+
+error_log("sad: " . print_r($languagesData, true));
 
 $model->career = $careerData['text'];
 
@@ -48,6 +52,16 @@ $model->career = $careerData['text'];
                 "career" => [
                     'errorOptions' => ['tag' => false],
                 ],
+                "languages" => [
+                    'errorOptions' => ['tag' => false],
+                    'template' => '{input}',
+                    'options' => ['class' => 'form-group lang-field'],
+                ],
+                "languages_level" => [
+                    'errorOptions' => ['tag' => false],
+                    'template' => '{input}',
+                    'options' => ['class' => 'form-group know-field'],
+                ],
             ];
 
             //убираем отображение ошибки валидации у прошедших валидацию полей
@@ -68,11 +82,44 @@ $model->career = $careerData['text'];
             <?= $form->field($model, 'git', $options['email'])->textInput(['value' => $user->git]) ?>
             <?= $form->field($model, 'career', $options['career'])->textarea(['class' => 'textarea', 'hidden' => 'true']) ?>
 
+            <!--     [Языки]      -->
+
+            <? echo Html::label($model->attributeLabels()['languages']); ?>
+            <div class="block-inputs">
+<!--                foreach ($model->languages as $key => $value)-->
+                <? foreach ($languagesData as $key => $lang) { ?>
+                    <div class="lang-block">
+                        <? echo $form->field(
+                                $model,
+                                'languages[' . $key . ']',
+                                $options['languages'])
+                                    ->textInput([
+                                        'class' => 'languages form-control',
+                                        'value' => $lang['language']['name']] )
+                                            ->label(false); ?>
+                        <? echo $form->field(
+                                $model,
+                                'languages_level[' . $key . ']', $options['languages_level'])
+                                    ->dropDownList(
+                                        $languageLevelData, [
+                                            'class' => 'form-control drop-down-lang',
+                                            'options' => [
+                                                $lang['level']['id'] => ['selected' => true]]
+                                        ])->label(false); ?>
+
+                        <a type="button" class="btn btn-danger del_b"><i class="fa fa-minus" aria-hidden="true"></i></a>
+                        <a type="button" class="btn btn-info add_b"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                    </div>
+                <? } ?>
+            </div>
+
             <div class="form-group">
                 <?= Html::submitButton('Сохранить', ['class' => 'btn btn-info']) ?>
             </div>
 
             <?php ActiveForm::end(); ?>
+
+
 
         </div>
     </div>

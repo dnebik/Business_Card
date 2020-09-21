@@ -4,6 +4,9 @@
 namespace app\controllers;
 
 use app\models\Career;
+use app\models\LanguageKnowledge;
+use app\models\Languages;
+use app\models\LevelOfKnowledge;
 use app\models\SettingsForm;
 use yii\web\Controller;
 use yii\filters\AccessControl;
@@ -49,6 +52,7 @@ class SettingsController extends Controller
         if ($model->load(Yii::$app->request->post()) ) {
             if ($model->validate()) {
                 error_log(print_r($model, true));
+
                 $user->email = $model->email;
                 $user->phone = $model->phone;
                 $user->git = $model->git;
@@ -61,6 +65,9 @@ class SettingsController extends Controller
                 }
                 $career->text = $model->career;
 
+                foreach ($model->languages as $key => $language) {
+                    LevelOfKnowledge::addKnowledge($user->id, $language, $model->languages_level[$key] + 1);
+                }
 
                 $career->save();
                 $user->save();
