@@ -55,7 +55,7 @@ class Languages extends \yii\db\ActiveRecord
         return $this->hasMany(LanguageKnowledge::class, ['id_language' => 'id']);
     }
 
-    public static function exist(string $language) {
+    public static function getByName(string $language) {
         return self::findOne(['name' => $language]);
     }
 }

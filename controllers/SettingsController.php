@@ -51,7 +51,8 @@ class SettingsController extends Controller
 
         if ($model->load(Yii::$app->request->post()) ) {
             if ($model->validate()) {
-                error_log(print_r($model, true));
+                error_log(print_r($model->languages, true));
+                error_log(print_r($model->languages_level, true));
 
                 $user->email = $model->email;
                 $user->phone = $model->phone;
@@ -65,8 +66,11 @@ class SettingsController extends Controller
                 }
                 $career->text = $model->career;
 
+                LanguageKnowledge::deleteAllFromUser($user);
                 foreach ($model->languages as $key => $language) {
-                    LevelOfKnowledge::addKnowledge($user->id, $language, $model->languages_level[$key] + 1);
+                    $level = LevelOfKnowledge::getByIdentity($model->languages_level[$key] + 1);
+//                    error_log(print_r($model->languages_level[$key], true));
+                    LanguageKnowledge::addKnowledge($user, $language, $level);
                 }
 
                 $career->save();

@@ -26,7 +26,7 @@ $interestsData = PersonalInterest::getUserInterests($user);
 $experiencesData = Experience::getUserExperience($user);
 $projectData = Projects::getUserProjects($user);
 
-error_log("sad: " . print_r($languagesData, true));
+error_log(print_r($languageLevelData, true));
 
 $model->career = $careerData['text'];
 
@@ -86,7 +86,29 @@ $model->career = $careerData['text'];
 
             <? echo Html::label($model->attributeLabels()['languages']); ?>
             <div class="block-inputs">
-<!--                foreach ($model->languages as $key => $value)-->
+                <? if (!$languagesData) { ?>
+                    <div class="lang-block">
+                        <? echo $form->field(
+                            $model,
+                            'languages[0]',
+                            $options['languages'])
+                            ->textInput([
+                                'class' => 'languages form-control'])
+                            ->label(false); ?>
+                        <? echo $form->field(
+                            $model,
+                            'languages_level[0]', $options['languages_level'])
+                            ->dropDownList(
+                                $languageLevelData, [
+                                'class' => 'form-control drop-down-lang',
+                                'options' => [
+                                    0 => ['selected' => true]]
+                            ])->label(false); ?>
+
+                        <a type="button" class="btn btn-danger del_b"><i class="fa fa-minus" aria-hidden="true"></i></a>
+                        <a type="button" class="btn btn-info add_b"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                    </div>
+                <? } else { ?>
                 <? foreach ($languagesData as $key => $lang) { ?>
                     <div class="lang-block">
                         <? echo $form->field(
@@ -97,20 +119,21 @@ $model->career = $careerData['text'];
                                         'class' => 'languages form-control',
                                         'value' => $lang['language']['name']] )
                                             ->label(false); ?>
-                        <? echo $form->field(
+                        <? error_log(print_r($lang['level']['id'] - 1, true));
+                        echo $form->field(
                                 $model,
                                 'languages_level[' . $key . ']', $options['languages_level'])
                                     ->dropDownList(
                                         $languageLevelData, [
                                             'class' => 'form-control drop-down-lang',
                                             'options' => [
-                                                $lang['level']['id'] => ['selected' => true]]
+                                                $lang['level']['id'] - 1 => ['selected' => true]]
                                         ])->label(false); ?>
 
                         <a type="button" class="btn btn-danger del_b"><i class="fa fa-minus" aria-hidden="true"></i></a>
                         <a type="button" class="btn btn-info add_b"><i class="fa fa-plus" aria-hidden="true"></i></a>
                     </div>
-                <? } ?>
+                <? }} ?>
             </div>
 
             <div class="form-group">

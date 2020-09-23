@@ -284,17 +284,17 @@ p {
 .lang-field {
   margin-bottom: unset;
   margin-right: 5px;
-  max-width: 250px;
-  width: 50%;
+  /*max-width: 250px;*/
+  /*width: 50%;*/
   display: inline-block; !important;
   flex: 1 0 auto;
 }
 .know-field {
   margin-bottom: unset;
   margin-right: 5px;
-  width: 120px;
+  /*width: 120px;*/
   display: inline-block; !important;
-  flex: 1 0 auto;
+  /*flex: 1 0 auto;*/
 }
 .drop-down-lang {
   width: 100%; !important;
@@ -336,6 +336,9 @@ p {
 }
 .fa {
   display: none; !important;
+}
+.del_b {
+  margin-right: 5px;
 }
 .navbar {
   background-color: #1b6d85;
