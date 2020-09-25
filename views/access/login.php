@@ -58,7 +58,7 @@ use yii\widgets\ActiveForm;
 
                 <div class="form-group">
                     <?= Html::submitButton('Войти', ['class' => 'btn btn-info']) ?>
-                    <a href="<?= Url::to('/access/registration') ?>">
+                    <a href="<?= Url::to('/registration') ?>">
                         <div class="btn btn-success">Зарегистрироваться</div>
                     </a>
                 </div>

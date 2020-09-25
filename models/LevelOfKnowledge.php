@@ -54,4 +54,17 @@ class LevelOfKnowledge extends \yii\db\ActiveRecord
     {
         return $this->hasMany(LanguageKnowledge::class, ['id_level' => 'id']);
     }
+
+    public static function getByIdentity(int $id) {
+        return self::findOne($id);
+    }
+
+    public static function getAllLevels() {
+        $languageLevelData = self::find()->select('name')->orderBy('id ASC')->asArray()->all();
+        $foo = array();
+        foreach ($languageLevelData as $level) {
+            array_push($foo, $level['name']);
+        }
+        return $foo;
+    }
 }

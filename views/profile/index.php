@@ -6,6 +6,9 @@ use app\models\PersonalSkills;
 use app\models\Career;
 use app\models\Education;
 use app\models\PersonalInterest;
+use app\models\Experience;
+use app\models\Projects;
+use yii\helpers\Url;
 
 /* @var $user User */
 
@@ -14,8 +17,8 @@ $languagesData = LanguageKnowledge::getAllUserKnowledge($user);
 $careerData = Career::getUserCareer($user);
 $educationData = Education::getUserEducation($user);
 $interestsData = PersonalInterest::getUserInterests($user);
-
-error_log("data: " . print_r($interestsData, true));
+$experiencesData = Experience::getUserExperience($user);
+$projectData = Projects::getUserProjects($user);
 
 ?>
 
@@ -26,117 +29,80 @@ error_log("data: " . print_r($interestsData, true));
         <section class="section summary-section">
             <h2 class="section-title"><i class="fa fa-user"></i>О себе</h2>
             <div class="summary">
-                <?= ($careerData['text'] == null) ? "<p><b>Нет информации.</b></p>" : $careerData["text"] ?>
+                <?= (!strip_tags($careerData['text'])) ? "<p><b>Нет информации о себе.</b></p>" : $careerData["text"] ?>
             </div><!--//summary-->
         </section><!--//section-->
 
         <section class="section experiences-section">
             <h2 class="section-title"><i class="fa fa-briefcase"></i>Опыт</h2>
-
-            <div class="item">
-                <div class="meta">
-                    <div class="upper-row">
-                        <h3 class="job-title">Lead Developer</h3>
-                        <div class="time">2015 - Present</div>
-                    </div><!--//upper-row-->
-                    <div class="company">Startup Hubs, San Francisco</div>
-                </div><!--//meta-->
-                <div class="details">
-                    <p>Describe your role here lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo
-                        ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,
-                        nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.
-                        Nulla consequat massa quis enim. Donec pede justo.</p>
-                    <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
-                        totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae
-                        dicta sunt explicabo. </p>
-                </div><!--//details-->
-            </div><!--//item-->
-
-            <div class="item">
-                <div class="meta">
-                    <div class="upper-row">
-                        <h3 class="job-title">Senior Software Engineer</h3>
-                        <div class="time">2014 - 2015</div>
-                    </div><!--//upper-row-->
-                    <div class="company">Google, London</div>
-                </div><!--//meta-->
-                <div class="details">
-                    <p>Describe your role here lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo
-                        ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,
-                        nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.</p>
-
-                </div><!--//details-->
-            </div><!--//item-->
-
-            <div class="item">
-                <div class="meta">
-                    <div class="upper-row">
-                        <h3 class="job-title">UI Developer</h3>
-                        <div class="time">2012 - 2014</div>
-                    </div><!--//upper-row-->
-                    <div class="company">Amazon, London</div>
-                </div><!--//meta-->
-                <div class="details">
-                    <p>Describe your role here lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo
-                        ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes,
-                        nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem.</p>
-                </div><!--//details-->
-            </div><!--//item-->
+            <?
+            if ($experiencesData == null) {
+                echo "<p><b>Нет опыта работы.</b></p>";
+            } else {
+                ?>
+                <? foreach ($experiencesData as $experience): ?>
+                    <div class="item">
+                        <div class="meta">
+                            <div class="upper-row">
+                                <h3 class="job-title"><?= $experience["position"] ?></h3>
+                                <div class="time"><?= $experience["year_start"] ?>
+                                    - <?= ($experience["year_end"] == null) ? "nowadays" : $experience["year_end"] ?></div>
+                            </div><!--//upper-row-->
+                            <div class="company"><?= $experience["place"] ?></div>
+                        </div><!--//meta-->
+                        <? if ($experience["description"] != null) { ?>
+                            <div class="details">
+                                <?= $experience["description"] ?>
+                            </div><!--//details-->
+                        <? } ?>
+                    </div><!--//item-->
+                <? endforeach;
+            } ?>
 
         </section><!--//section-->
 
         <section class="section projects-section">
             <h2 class="section-title"><i class="fa fa-archive"></i>Проекты</h2>
-            <div class="intro">
-                <p>You can list your side projects or open source libraries in this section. Lorem ipsum dolor sit amet,
-                    consectetur adipiscing elit. Vestibulum et ligula in nunc bibendum fringilla a eu lectus.</p>
-            </div><!--//intro-->
-            <div class="item">
-                <span class="project-title"><a href="#hook">Velocity</a></span> - <span class="project-tagline">A responsive website template designed to help startups promote, market and sell their products.</span>
-
-            </div><!--//item-->
-            <div class="item">
-                <span class="project-title"><a
-                            href="http://themes.3rdwavemedia.com/website-templates/responsive-bootstrap-theme-web-development-agencies-devstudio/"
-                            target="_blank">DevStudio</a></span> -
-                <span class="project-tagline">A responsive website template designed to help web developers/designers market their services. </span>
-            </div><!--//item-->
-            <div class="item">
-                <span class="project-title"><a
-                            href="http://themes.3rdwavemedia.com/website-templates/responsive-bootstrap-theme-for-startups-tempo/"
-                            target="_blank">Tempo</a></span> - <span class="project-tagline">A responsive website template designed to help startups promote their products or services and to attract users &amp; investors</span>
-            </div><!--//item-->
-            <div class="item">
-                <span class="project-title"><a
-                            href="hhttp://themes.3rdwavemedia.com/website-templates/responsive-bootstrap-theme-mobile-apps-atom/"
-                            target="_blank">Atom</a></span> - <span class="project-tagline">A comprehensive website template solution for startups/developers to market their mobile apps. </span>
-            </div><!--//item-->
-            <div class="item">
-                <span class="project-title"><a
-                            href="http://themes.3rdwavemedia.com/website-templates/responsive-bootstrap-theme-for-mobile-apps-delta/"
-                            target="_blank">Delta</a></span> - <span class="project-tagline">A responsive Bootstrap one page theme designed to help app developers promote their mobile apps</span>
-            </div><!--//item-->
+            <?
+            if (!$projectData) {
+                ?>
+                <p><b>Нет проектов.</b></p>
+            <? } else {
+                foreach ($projectData as $project) { ?>
+                    <div class="item">
+                        <a href="<?= $project['url'] ?>"><?= $project['name'] ?></a>
+                        <? if ($project['description']) {
+                            echo " - {$project['description']}";
+                        } ?>
+                    </div>
+                <? }
+            } ?>
         </section><!--//section-->
 
         <section class="skills-section section">
             <h2 class="section-title"><i class="fa fa-rocket"></i>Навыки &amp; Умения</h2>
             <div class="skillset">
                 <table>
-                    <? foreach ($skillsData as $skill): ?>
-<!--                        <div class="item">-->
-                    <tr>
-                        <td>
-                            <h3 class="level-title"><?= $skill['skill']["name"] ?></h3>
-                        </td>
-                        <td class="w-100">
-                            <div class="level-bar">
-                                <div class="level-bar-inner" data-level="<?= $skill["percent"] ?>%">
-                                </div>
-                            </div>
-                        </td><!--//level-bar-->
-                    </tr>
-<!--                        </div>-->
-                    <? endforeach; ?>
+                    <?
+                    if (!$skillsData) {
+                        echo "<p><b>Нет навыков.</b></p>";
+                    } else {
+                        foreach ($skillsData as $skill) { ?>
+                            <!--                        <div class="item">-->
+                            <tr>
+                                <td>
+                                    <h3 class="level-title"><?= $skill['skill']["name"] ?></h3>
+                                </td>
+                                <td class="w-100">
+                                    <div class="level-bar">
+                                        <div class="level-bar-inner" data-level="<?= $skill["percent"] ?>%">
+                                        </div>
+                                    </div>
+                                </td><!--//level-bar-->
+                            </tr>
+                            <!--                        </div>-->
+                        <? }
+                    } ?>
                 </table>
             </div>
         </section><!--//skills-section-->
@@ -144,49 +110,86 @@ error_log("data: " . print_r($interestsData, true));
     </div><!--//main-body-->
     <div class="sidebar-wrapper">
         <div class="profile-container">
+            <? if ($user->login == Yii::$app->user->getIdentity()['login']) {
+                ?>
+                    <div class="setting-ico">
+                        <a href="<?= Url::to('/settings') ?>"><i class="fa fa-cog" aria-hidden="true"></i></a>
+                    </div>
+                <?
+            } ?>
             <img class="profile" src="" alt=""/>
             <h1 class="name"><?= $user["first_name"] . " " . $user["last_name"] ?></h1>
             <h3 class="tagline"><?= $user["post"] ?></h3>
         </div><!--//profile-container-->
 
-        <div class="contact-container container-block">
-            <ul class="list-unstyled contact-list">
-                <li class="email"><i class="fa fa-envelope"></i><a
-                            href="http://<?= $user["email"] ?>"><?= $user["email"] ?></a></li>
-                <li class="phone"><i class="fa fa-phone"></i><a
-                            href="tel:<?= $user["phone"] ?>"><?= $user["phone"] ?></a></li>
-                <li class="website"><i class="fa fa-globe"></i><a href="https://<?= $user["social"] ?>"
-                                                                  target="_blank"><?= $user["social"] ?></a></li>
-                <li class="github"><i class="fa fa-github"></i><a href="https://<?= $user["git"] ?>"
-                                                                  target="_blank"><?= $user["git"] ?></a></li>
-            </ul>
-        </div><!--//contact-container-->
+
+        <? if ($user['email'] || $user['social'] || $user['phone'] || $user['git']) { ?>
+            <div class="contact-container container-block">
+                <ul class="list-unstyled contact-list">
+                    <? if ($user['email']) { ?>
+                        <li class="email"><i class="fa fa-envelope"></i><a
+                                    href="http://<?= $user["email"] ?>"><?= $user["email"] ?></a></li>
+                    <? } ?>
+                    <? if ($user['phone']) { ?>
+                        <li class="phone"><i class="fa fa-phone"></i><a
+                                    href="tel:<?= $user["phone"] ?>"><?= $user["phone"] ?></a></li>
+                    <? } ?>
+                    <? if ($user['social']) { ?>
+                        <li class="website"><i class="fa fa-globe"></i><a href="<?= $user["social"] ?>"
+                                                                          target="_blank"><?= substr(strrchr($user['social'],
+                                    '/'), 1) ?></a></li>
+                    <? } ?>
+                    <? if ($user['git']) { ?>
+                        <li class="github"><i class="fa fa-github"></i><a href="<?= $user["git"] ?>"
+                                                                          target="_blank"><?= substr(strrchr($user['git'],
+                                    '/'),
+                                    1) ?></a></li>
+                    <? } ?>
+                </ul>
+            </div><!--//contact-container-->
+        <? } ?>
         <div class="education-container container-block">
             <h2 class="container-block-title">Образование</h2>
-            <? foreach ($educationData as $item): ?>
-                <div class="item">
-                    <h4 class="degree"><?= $item["faculty"]["name"] ?></h4>
-                    <h5 class="meta"><?= $item["university"]["name"] ?></h5>
-                    <div class="time"><?= $item["year_start"] ?> - <?= $item["year_end"] ?></div>
-                </div><!--//item-->
-            <? endforeach ?>
+            <?
+            if (!$educationData) {
+                echo "<p><b>Нет образования.</b></p>";
+            } else {
+                foreach ($educationData as $item) { ?>
+                    <div class="item">
+                        <h4 class="degree"><?= $item["faculty"]["name"] ?></h4>
+                        <h5 class="meta"><?= $item["university"]["name"] ?></h5>
+                        <div class="time"><?= $item["year_start"] ?> - <?= $item["year_end"] ?></div>
+                    </div><!--//item-->
+                <? }
+            } ?>
         </div><!--//education-container-->
 
         <div class="languages-container container-block">
             <h2 class="container-block-title">Языки</h2>
             <ul class="list-unstyled interests-list">
-                <? foreach ($languagesData as $language): ?>
-                    <li><?= $language["language"]['name'] ?> <span class="lang-desc">(<?= $language["level"]['name'] ?>)</span></li>
-                <? endforeach; ?>
+                <?
+                if (!$languagesData) {
+                    echo "<p><b>Нет информации о языках.</b></p>";
+                } else {
+                    foreach ($languagesData as $language) { ?>
+                        <li><?= $language["language"]['name'] ?> <span
+                                    class="lang-desc">(<?= $language["level"]['name'] ?>)</span></li>
+                    <? }
+                } ?>
             </ul>
         </div><!--//interests-->
 
         <div class="interests-container container-block">
             <h2 class="container-block-title">Интересы</h2>
             <ul class="list-unstyled interests-list">
-                <? foreach ($interestsData as $interest): ?>
-                    <li><?= $interest["inerest"]["name"] ?></li>
-                <? endforeach; ?>
+                <?
+                if (!$interestsData) {
+                    echo "<p><b>Нет интересов.</b></p>";
+                } else {
+                    foreach ($interestsData as $interest) { ?>
+                        <li><?= $interest["inerest"]["name"] ?></li>
+                    <? }
+                } ?>
             </ul>
         </div><!--//interests-->
     </div><!--//sidebar-wrapper-->

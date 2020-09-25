@@ -3,25 +3,26 @@
 namespace app\models;
 
 use Yii;
-use app\models\User;
 
 /**
- * This is the model class for table "career".
+ * This is the model class for table "projects".
  *
  * @property int $id
  * @property int $id_user
- * @property string $text
+ * @property string|null $url
+ * @property string|null $description
+ * @property string $name
  *
  * @property User $user
  */
-class Career extends \yii\db\ActiveRecord
+class Projects extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'career';
+        return 'projects';
     }
 
     /**
@@ -30,10 +31,11 @@ class Career extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_user', 'text'], 'required'],
+            [['id_user', 'name'], 'required'],
             [['id_user'], 'integer'],
-            [['text'], 'string'],
-            [['id_user'], 'unique'],
+            [['description'], 'string'],
+            [['url'], 'string', 'max' => 255],
+            [['name'], 'string', 'max' => 32],
             [['id_user'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['id_user' => 'id']],
         ];
     }
@@ -46,7 +48,9 @@ class Career extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'id_user' => 'Id User',
-            'text' => 'Text',
+            'url' => 'Url',
+            'description' => 'Description',
+            'name' => 'Name',
         ];
     }
 
@@ -60,11 +64,7 @@ class Career extends \yii\db\ActiveRecord
         return $this->hasOne(User::class, ['id' => 'id_user']);
     }
 
-    public static function getCareerByUser(User $user) {
-        return self::findOne(['id_user' => $user->id]);
-    }
-
-    public static function getUserCareer(User $user) {
-        return self::find()->where(['id_user' => $user->id])->asArray()->one();
+    public static function getUserProjects(User $user) {
+        return self::find()->where(['id_user' => $user->id])->asArray()->all();
     }
 }

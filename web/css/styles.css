@@ -65,6 +65,7 @@ p {
   min-height: 800px;
   color: #fff;
   display: table-cell;
+  padding-bottom: 2rem;
 }
 .sidebar-wrapper a {
   color: #fff;
@@ -246,6 +247,7 @@ p {
   margin-bottom: 5px;
 }
 .skillset .level-bar {
+  margin-bottom: 5px;
   height: 12px;
   background: #f5f5f5;
 }
@@ -265,7 +267,39 @@ p {
 .footer .fa-heart {
   color: #fb866a;
 }
-
+.block-inputs {
+  padding: 10px;
+  border: solid lightblue;
+  border-radius: 5px;
+  margin-bottom: 2rem;
+}
+.lang-block {
+  display: flex;
+  margin-bottom: 5px;
+}
+.languages {
+  width: 100%; !important;
+  display: inline-block; !important;
+}
+.lang-field {
+  margin-bottom: unset;
+  margin-right: 5px;
+  /*max-width: 250px;*/
+  /*width: 50%;*/
+  display: inline-block; !important;
+  flex: 1 0 auto;
+}
+.know-field {
+  margin-bottom: unset;
+  margin-right: 5px;
+  /*width: 120px;*/
+  display: inline-block; !important;
+  /*flex: 1 0 auto;*/
+}
+.drop-down-lang {
+  width: 100%; !important;
+  display: inline-block; !important;
+}
 .mWrapper {
   display: flex;
   flex-direction: column;
@@ -292,6 +326,20 @@ p {
   margin-top: 5px;
   padding: 5px 10px;
 }
+.setting-ico {
+  position: relative;
+  display: block; !important;
+  width: max-content;
+  margin: -24px -18px 0 0;
+  float: right;
+  font-size: x-large;
+}
+.fa {
+  display: none; !important;
+}
+.del_b {
+  margin-right: 5px;
+}
 .navbar {
   background-color: #1b6d85;
   line-height: 1px;
@@ -315,14 +363,34 @@ p {
 .iName .iFName {
   padding-right: 10px;
 }
-.accessForm {
+.accessForm, .settingsForm {
   margin-top: 2rem;
 }
-.accessCard {
-  max-width: 500px;
+.accessCard, .settingsCard {
   margin: 0 auto;
   margin-bottom: 2rem;
   float: none;
+}
+.textarea {
+  display: block;
+  width: 100%;
+  padding: .375rem .75rem;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: .25rem;
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+.accessCard {
+  max-width: 500px;
+}
+.settingsCard {
+  max-width: 800px;
+  color: #2d7788;
 }
 .tHead {
   width: 100%;
@@ -361,6 +429,7 @@ p {
   font-size: 140%;
   font-weight: bolder;
 }
+
 /* Extra small devices (phones, less than 768px) */
 @media (max-width: 767px) {
 

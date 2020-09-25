@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use http\Encoding\Stream;
 use Yii;
 use app\models\User;
 
@@ -15,7 +16,7 @@ use app\models\User;
  *
  * @property Languages $language
  * @property LevelOfKnowledge $level
- * @property Users $user
+ * @property User $user
  */
 class LanguageKnowledge extends \yii\db\ActiveRecord
 {
@@ -84,11 +85,31 @@ class LanguageKnowledge extends \yii\db\ActiveRecord
         return $this->hasOne(User::class, ['id' => 'id_user']);
     }
 
-    public static function  getAllUserKnowledge (User $user) {
+    public static function getAllUserKnowledge (User $user) {
         return self::find()->joinWith(['level', 'language'])->where(['id_user' => $user->id])->asArray()->all();
     }
 
-//    public static function getAllKnowledge($user User) {
-//
-//}
+    public static function deleteAllFromUser(User $user) {
+        return self::deleteAll(['id_user' => $user->id]);
+    }
+
+    public static function addKnowledge(User $user, string $lang, LevelOfKnowledge $level) {
+        if ($lang) {
+
+            $language = Languages::getByName($lang);
+            $language_know = new LanguageKnowledge();
+
+            if (!$language) {
+                $language = new Languages();
+                $language->name = $lang;
+                $language->save();
+            }
+
+            $language_know->id_user = $user->id;
+            $language_know->id_language = $language->id;
+            $language_know->id_level = $level->id;
+
+            return $language_know->save();
+        }
+    }
 }

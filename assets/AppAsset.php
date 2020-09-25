@@ -21,8 +21,10 @@ class AppAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
 //        'css/site.css',
-        'css/styles.css',
         'plugins/bootstrap/css/bootstrap.min.css',
+        'plugins/medium-editor/css/medium-editor.css',
+        'plugins/medium-editor/css/themes/bootstrap.css',
+        'css/styles.css',
         'plugins/font-awesome/css/font-awesome.css',
     ];
     public $js = [
@@ -30,6 +32,7 @@ class AppAsset extends AssetBundle
         'https://oss.maxcdn.com/respond/1.4.2/respond.min.js',
         'plugins/jquery-1.11.3.min.js',
         'plugins/bootstrap/js/bootstrap.min.js',
+        'plugins/medium-editor/js/medium-editor.js',
         'js/main.js',
     ];
     public $depends = [
