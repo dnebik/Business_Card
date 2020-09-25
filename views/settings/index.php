@@ -26,8 +26,6 @@ $interestsData = PersonalInterest::getUserInterests($user);
 $experiencesData = Experience::getUserExperience($user);
 $projectData = Projects::getUserProjects($user);
 
-error_log(print_r($languageLevelData, true));
-
 $model->career = $careerData['text'];
 
 ?>
@@ -75,73 +73,70 @@ $model->career = $careerData['text'];
 
             <?php $form = ActiveForm::begin(); ?>
 
+            <!--     [EMAIL]      -->
             <?= $form->field($model, 'email', $options['email'])->input('email', ['value' => $user->email]) ?>
+            <!--      [PHONE]      -->
             <?= $form->field($model, 'phone', $options['phone'])->input('tel',
                 ['value' => $user->phone, 'pattern' => "^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$"]) ?>
+            <!--      [SOCIAL]      -->
             <?= $form->field($model, 'social', $options['email'])->textInput(['value' => $user->social]) ?>
+            <!--      [GIT]      -->
             <?= $form->field($model, 'git', $options['email'])->textInput(['value' => $user->git]) ?>
-            <?= $form->field($model, 'career', $options['career'])->textarea(['class' => 'textarea', 'hidden' => 'true']) ?>
+            <!--      [CAREER]      -->
+            <?= $form->field($model, 'career', $options['career'])->textarea([
+                'class' => 'textarea',
+                'hidden' => 'true'
+            ]) ?>
 
             <!--     [Языки]      -->
-
             <? echo Html::label($model->attributeLabels()['languages']); ?>
             <div class="block-inputs">
-                <? if (!$languagesData) { ?>
+                <?
+                $key = 0;
+                $lang = $languagesData[$key++];
+                do { ?>
                     <div class="lang-block">
-                        <? echo $form->field(
-                            $model,
-                            'languages[0]',
-                            $options['languages'])
-                            ->textInput([
-                                'class' => 'languages form-control'])
-                            ->label(false); ?>
-                        <? echo $form->field(
-                            $model,
-                            'languages_level[0]', $options['languages_level'])
-                            ->dropDownList(
-                                $languageLevelData, [
-                                'class' => 'form-control drop-down-lang',
-                                'options' => [
-                                    0 => ['selected' => true]]
-                            ])->label(false); ?>
+                        <?
+                        $optionsInput = ['class' => 'languages form-control'];
+                        if ($lang) {
+                            array_push($optionsInput, ['value' => $lang['language']['name']]);
+                        }
 
-                        <a type="button" class="btn btn-danger del_b"><i class="fa fa-minus" aria-hidden="true"></i></a>
-                        <a type="button" class="btn btn-info add_b"><i class="fa fa-plus" aria-hidden="true"></i></a>
-                    </div>
-                <? } else { ?>
-                <? foreach ($languagesData as $key => $lang) { ?>
-                    <div class="lang-block">
-                        <? echo $form->field(
-                                $model,
-                                'languages[' . $key . ']',
-                                $options['languages'])
-                                    ->textInput([
-                                        'class' => 'languages form-control',
-                                        'value' => $lang['language']['name']] )
-                                            ->label(false); ?>
-                        <? error_log(print_r($lang['level']['id'] - 1, true));
+                        echo $form->field($model, 'languages[' . $key . ']', $options['languages'])
+                            ->textInput($optionsInput)->label(false);
+                        ?>
+
+                        <?
+                        $optionsInput = ['class' => 'form-control drop-down-lang'];
+                        if ($lang) {
+                            array_push($optionsInput, [
+                                'options' => [$lang['level']['id'] - 1 => ['selected' => true]]
+                            ]);
+                        } else {
+                            array_push($optionsInput, [
+                                'options' => [0 => ['selected' => true]]
+                            ]);
+                        }
                         echo $form->field(
-                                $model,
-                                'languages_level[' . $key . ']', $options['languages_level'])
-                                    ->dropDownList(
-                                        $languageLevelData, [
-                                            'class' => 'form-control drop-down-lang',
-                                            'options' => [
-                                                $lang['level']['id'] - 1 => ['selected' => true]]
-                                        ])->label(false); ?>
+                            $model,
+                            'languages_level[' . $key . ']', $options['languages_level'])
+                            ->dropDownList(
+                                $languageLevelData, $optionsInput)->label(false); ?>
 
                         <a type="button" class="btn btn-danger del_b"><i class="fa fa-minus" aria-hidden="true"></i></a>
-                        <a type="button" class="btn btn-info add_b"><i class="fa fa-plus" aria-hidden="true"></i></a>
+                        <a type="button" class="btn btn-info add_b"><i class="fa fa-plus"
+                                                                       aria-hidden="true"></i></a>
                     </div>
-                <? }} ?>
+                <? } while ($lang = $languagesData[$key++]); ?>
             </div>
+            <!--     [Языки конец]      -->
 
+            <!--      [BUTTON]      -->
             <div class="form-group">
                 <?= Html::submitButton('Сохранить', ['class' => 'btn btn-info']) ?>
             </div>
 
             <?php ActiveForm::end(); ?>
-
 
 
         </div>
