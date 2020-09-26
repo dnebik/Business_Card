@@ -1,30 +1,16 @@
 <?php
 
-use app\models\PersonalInterest;
-use app\models\PersonalSkills;
-use app\models\LanguageKnowledge;
-use app\models\Career;
-use app\models\Education;
-use app\models\Experience;
-use app\models\Projects;
 use yii\widgets\ActiveForm;
 use yii\helpers\Html;
-use app\models\LevelOfKnowledge;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\LoginForm */
 /* @var $form ActiveForm */
 
-$user = Yii::$app->user->getIdentity();
-
-$skillsData = PersonalSkills::getAllUserSkills($user);
-$languagesData = LanguageKnowledge::getAllUserKnowledge($user);
-$languageLevelData = LevelOfKnowledge::getAllLevels();
-$careerData = Career::getUserCareer($user);
-$educationData = Education::getUserEducation($user);
-$interestsData = PersonalInterest::getUserInterests($user);
-$experiencesData = Experience::getUserExperience($user);
-$projectData = Projects::getUserProjects($user);
+/* @var $user \app\models\User */
+/* @var $careerData array */
+/* @var $languagesData array */
+/* @var $languageLevelData array */
 
 $model->career = $careerData['text'];
 
@@ -98,10 +84,7 @@ $model->career = $careerData['text'];
                     <div class="lang-block">
                         <?
                         $optionsInput = ['class' => 'languages form-control'];
-                        if ($lang) {
-                            array_push($optionsInput, ['value' => $lang['language']['name']]);
-                        }
-
+                        $optionsInput += ['value' => $lang['language']['name']];
                         echo $form->field($model, 'languages[' . $key . ']', $options['languages'])
                             ->textInput($optionsInput)->label(false);
                         ?>
@@ -109,13 +92,9 @@ $model->career = $careerData['text'];
                         <?
                         $optionsInput = ['class' => 'form-control drop-down-lang'];
                         if ($lang) {
-                            array_push($optionsInput, [
-                                'options' => [$lang['level']['id'] - 1 => ['selected' => true]]
-                            ]);
+                            $optionsInput += ['options' => [$lang['level']['id'] - 1 => ['selected' => true]]];
                         } else {
-                            array_push($optionsInput, [
-                                'options' => [0 => ['selected' => true]]
-                            ]);
+                            $optionsInput += ['options' => [0 => ['selected' => true]]];
                         }
                         echo $form->field(
                             $model,
