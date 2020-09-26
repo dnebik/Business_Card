@@ -273,7 +273,7 @@ p {
   border-radius: 5px;
   margin-bottom: 2rem;
 }
-.lang-block, .interests-block {
+.lang-block, .interests-block, .skills-block {
   display: flex;
   margin-bottom: 5px;
 }

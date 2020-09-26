@@ -89,6 +89,15 @@ class LanguageKnowledge extends \yii\db\ActiveRecord
         return self::find()->joinWith(['level', 'language'])->where(['id_user' => $user->id])->asArray()->all();
     }
 
+    public static function saveKnowledge(User $user, array $languages, array $levels) {
+        LanguageKnowledge::deleteAllFromUser($user);
+        foreach ($languages as $key => $language) {
+            $level = LevelOfKnowledge::getByIdentity($levels[$key] + 1);
+            LanguageKnowledge::addKnowledge($user, $language, $level);
+        }
+        return self::findAll(['id_user' => $user->id]);
+    }
+
     public static function deleteAllFromUser(User $user) {
         return self::deleteAll(['id_user' => $user->id]);
     }

@@ -4,7 +4,7 @@ use yii\widgets\ActiveForm;
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\LoginForm */
+/* @var $model app\models\SettingsForm */
 /* @var $form ActiveForm */
 
 /* @var $user \app\models\User */
@@ -13,9 +13,8 @@ use yii\helpers\Html;
 /* @var $languageLevelData array */
 /* @var $interestsData array */
 
-error_log("interests: " . print_r($interestsData, true));
+error_log("Languages: " . print_r($model->languages_level, true));
 
-$model->career = $careerData['text'];
 
 ?>
 
@@ -49,7 +48,17 @@ $model->career = $careerData['text'];
                     'template' => '{input}',
                     'options' => ['class' => 'form-group lang-field'],
                 ],
+                "skill" => [
+                    'errorOptions' => ['tag' => false],
+                    'template' => '{input}',
+                    'options' => ['class' => 'form-group lang-field'],
+                ],
                 "languages_level" => [
+                    'errorOptions' => ['tag' => false],
+                    'template' => '{input}',
+                    'options' => ['class' => 'form-group know-field'],
+                ],
+                "skills_percent" => [
                     'errorOptions' => ['tag' => false],
                     'template' => '{input}',
                     'options' => ['class' => 'form-group know-field'],
@@ -68,14 +77,14 @@ $model->career = $careerData['text'];
             <?php $form = ActiveForm::begin(); ?>
 
             <!--     [EMAIL]      -->
-            <?= $form->field($model, 'email', $options['email'])->input('email', ['value' => $user->email]) ?>
+            <?= $form->field($model, 'email', $options['email'])->input('email') ?>
             <!--      [PHONE]      -->
             <?= $form->field($model, 'phone', $options['phone'])->input('tel',
-                ['value' => $user->phone, 'pattern' => "^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$"]) ?>
+                ['pattern' => "^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$"]) ?>
             <!--      [SOCIAL]      -->
-            <?= $form->field($model, 'social', $options['email'])->textInput(['value' => $user->social]) ?>
+            <?= $form->field($model, 'social', $options['email'])->textInput() ?>
             <!--      [GIT]      -->
-            <?= $form->field($model, 'git', $options['email'])->textInput(['value' => $user->git]) ?>
+            <?= $form->field($model, 'git', $options['email'])->textInput() ?>
             <!--      [CAREER]      -->
             <?= $form->field($model, 'career', $options['career'])->textarea([
                 'class' => 'textarea',
@@ -87,12 +96,13 @@ $model->career = $careerData['text'];
             <div class="block-inputs">
                 <?
                 $key = 0;
-                $lang = $languagesData[$key++];
+                $lang = $model->languages[$key++];
                 do { ?>
                     <div class="lang-block">
                         <?
                         $optionsInput = ['class' => 'form-control'];
                         $optionsInput += ['value' => $lang['language']['name']];
+                        $optionsInput += ['maxlength' => 32];
                         echo $form->field($model, 'languages[' . $key . ']', $options['languages'])
                             ->textInput($optionsInput)->label(false);
                         ?>
@@ -108,13 +118,13 @@ $model->career = $careerData['text'];
                             $model,
                             'languages_level[' . $key . ']', $options['languages_level'])
                             ->dropDownList(
-                                $languageLevelData, $optionsInput)->label(false); ?>
+                                $model->languages_level, $optionsInput)->label(false); ?>
 
                         <a type="button" class="btn btn-danger del_b"><i class="fa fa-minus" aria-hidden="true"></i></a>
                         <a type="button" class="btn btn-info add_b"><i class="fa fa-plus"
                                                                        aria-hidden="true"></i></a>
                     </div>
-                <? } while ($lang = $languagesData[$key++]); ?>
+                <? } while ($lang = $model->languages[$key++]); ?>
             </div>
             <!--     [Языки конец]      -->
 
@@ -123,12 +133,13 @@ $model->career = $careerData['text'];
             <div class="block-inputs">
                 <?
                 $key = 0;
-                $interest = $interestsData[$key++];
+                $interest = $model->interests[$key++];
                 do { ?>
                     <div class="interests-block">
                         <?
                         $optionsInput = ['class' => 'form-control'];
                         $optionsInput += ['value' => $interest['interest']['name']];
+                        $optionsInput += ['maxlength' => 32];
                         echo $form->field($model, 'interests[' . $key . ']', $options['interests'])
                             ->textInput($optionsInput)->label(false);
                         ?>
@@ -137,9 +148,36 @@ $model->career = $careerData['text'];
                         <a type="button" class="btn btn-info add_b"><i class="fa fa-plus"
                                                                        aria-hidden="true"></i></a>
                     </div>
-                <? } while ($interest = $interestsData[$key++]); ?>
+                <? } while ($interest = $model->interests[$key++]); ?>
             </div>
             <!--     [Увлечения конец]      -->
+
+            <!--     [Навыки]      -->
+            <? echo Html::label($model->attributeLabels()['interests']); ?>
+            <div class="block-inputs">
+                <?
+                $key = 0;
+                $skill = $model->skills[$key++];
+                do { ?>
+                    <div class="skills-block">
+                        <?
+                        $optionsInput = ['class' => 'form-control'];
+                        $optionsInput += ['value' => $skill['skill']['name']];
+                        $optionsInput += ['maxlength' => 32];
+                        echo $form->field($model, 'skills[' . $key . ']', $options['skill'])
+                            ->textInput($optionsInput)->label(false);
+                        ?>
+
+                        <? echo $form->field($model, 'skills_percent[' . $key . ']', $options['skills_percent'])
+                        ->input('number', ['min' => 1, 'max' => 100, 'value' => 1])?>
+
+                        <a type="button" class="btn btn-danger del_b"><i class="fa fa-minus" aria-hidden="true"></i></a>
+                        <a type="button" class="btn btn-info add_b"><i class="fa fa-plus"
+                                                                       aria-hidden="true"></i></a>
+                    </div>
+                <? } while ($skill = $model->skills[$key++]); ?>
+            </div>
+            <!--     [Навыки конец]      -->
 
             <!--      [BUTTON]      -->
             <div class="form-group">
