@@ -54,9 +54,9 @@ class PersonalInterest extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getInerest()
+    public function getInterest()
     {
-        return $this->hasOne(Interests::class, ['id' => 'id_inerest']);
+        return $this->hasOne(Interests::class, ['id' => 'id_interest']);
     }
 
     /**
@@ -70,6 +70,6 @@ class PersonalInterest extends \yii\db\ActiveRecord
     }
 
     public static function getUserInterests(User $user) {
-        return self::find()->joinWith(['inerest'])->where(['id_user' => $user])->asArray()->all();
+        return self::find()->joinWith(['interest'])->where(['id_user' => $user])->asArray()->all();
     }
 }
