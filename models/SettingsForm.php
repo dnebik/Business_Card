@@ -34,7 +34,7 @@ class SettingsForm extends Model
                 'pattern' => '/[(http:\/\/)|(https:\/\/)].+\..+/',
                 'message' => 'Не верно заполненное поле «{attribute}».'],
 
-            [['languages', 'languages_level', 'interests'], 'each', 'rule' => 'string'],
+            [['languages', 'languages_level', 'interests'], 'each', 'rule' => ['string']],
         ];
     }
 
