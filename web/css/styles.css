@@ -273,14 +273,14 @@ p {
   border-radius: 5px;
   margin-bottom: 2rem;
 }
-.lang-block {
+.lang-block, .interests-block {
   display: flex;
   margin-bottom: 5px;
 }
-.languages {
-  width: 100%; !important;
-  display: inline-block; !important;
-}
+/*.languages {*/
+/*  width: 100%; !important;*/
+/*  display: inline-block; !important;*/
+/*}*/
 .lang-field {
   margin-bottom: unset;
   margin-right: 5px;

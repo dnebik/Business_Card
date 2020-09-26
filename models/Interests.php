@@ -52,6 +52,6 @@ class Interests extends \yii\db\ActiveRecord
      */
     public function getPersonalInterests()
     {
-        return $this->hasMany(PersonalInterest::class, ['id_inerest' => 'id']);
+        return $this->hasMany(PersonalInterest::class, ['id_interest' => 'id']);
     }
 }

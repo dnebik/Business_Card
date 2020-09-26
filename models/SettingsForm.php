@@ -15,6 +15,7 @@ class SettingsForm extends Model
     public $career;
     public $languages;
     public $languages_level;
+    public $interests;
 
     public function rules()
     {
@@ -33,7 +34,7 @@ class SettingsForm extends Model
                 'pattern' => '/[(http:\/\/)|(https:\/\/)].+\..+/',
                 'message' => 'Не верно заполненное поле «{attribute}».'],
 
-            [['languages', 'languages_level'], 'each', 'rule' => ['string']],
+            [['languages', 'languages_level', 'interests'], 'each', 'rule' => ['string']],
         ];
     }
 
@@ -46,6 +47,7 @@ class SettingsForm extends Model
             'git' => 'GitHub',
             'languages' => 'Языки',
             'languages_level' => 'Уровень владения языком',
+            'interests' => 'Увлечения',
         ];
     }
 
