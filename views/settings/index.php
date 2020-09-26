@@ -11,6 +11,9 @@ use yii\helpers\Html;
 /* @var $careerData array */
 /* @var $languagesData array */
 /* @var $languageLevelData array */
+/* @var $interestsData array */
+
+error_log("interests: " . print_r($interestsData, true));
 
 $model->career = $careerData['text'];
 
@@ -37,6 +40,11 @@ $model->career = $careerData['text'];
                     'errorOptions' => ['tag' => false],
                 ],
                 "languages" => [
+                    'errorOptions' => ['tag' => false],
+                    'template' => '{input}',
+                    'options' => ['class' => 'form-group lang-field'],
+                ],
+                "interests" => [
                     'errorOptions' => ['tag' => false],
                     'template' => '{input}',
                     'options' => ['class' => 'form-group lang-field'],
@@ -83,7 +91,7 @@ $model->career = $careerData['text'];
                 do { ?>
                     <div class="lang-block">
                         <?
-                        $optionsInput = ['class' => 'languages form-control'];
+                        $optionsInput = ['class' => 'form-control'];
                         $optionsInput += ['value' => $lang['language']['name']];
                         echo $form->field($model, 'languages[' . $key . ']', $options['languages'])
                             ->textInput($optionsInput)->label(false);
@@ -109,6 +117,29 @@ $model->career = $careerData['text'];
                 <? } while ($lang = $languagesData[$key++]); ?>
             </div>
             <!--     [Языки конец]      -->
+
+            <!--     [Увлечения]      -->
+            <? echo Html::label($model->attributeLabels()['interests']); ?>
+            <div class="block-inputs">
+                <?
+                $key = 0;
+                $interest = $interestsData[$key++];
+                do { ?>
+                    <div class="interests-block">
+                        <?
+                        $optionsInput = ['class' => 'form-control'];
+                        $optionsInput += ['value' => $interest['interest']['name']];
+                        echo $form->field($model, 'interests[' . $key . ']', $options['interests'])
+                            ->textInput($optionsInput)->label(false);
+                        ?>
+
+                        <a type="button" class="btn btn-danger del_b"><i class="fa fa-minus" aria-hidden="true"></i></a>
+                        <a type="button" class="btn btn-info add_b"><i class="fa fa-plus"
+                                                                       aria-hidden="true"></i></a>
+                    </div>
+                <? } while ($interest = $interestsData[$key++]); ?>
+            </div>
+            <!--     [Увлечения конец]      -->
 
             <!--      [BUTTON]      -->
             <div class="form-group">

@@ -67,23 +67,29 @@ $('.block-inputs').on('click', '.add_b', function(e) {
     $parent.after($clone);
     //
 
+    console.log($parent);
+
     //Замена всех индефикаторов (когда нуб в JS пишешь такую дичь -)
     var foo = $clone[0]['children'][0]['classList']['value'];
     $clone[0]['children'][0]['classList']['value'] = foo.replace(num, $max);
-    foo = $clone[0]['children'][1]['classList']['value'];
-    $clone[0]['children'][1]['classList']['value'] = foo.replace(num, $max);
     foo = $clone[0]['children'][0]['children'][0]['attributes']['id']['value'];
     $clone[0]['children'][0]['children'][0]['attributes']['id']['value'] = foo.replace(num, $max);
-    foo = $clone[0]['children'][1]['children'][0]['attributes']['id']['value'];
-    $clone[0]['children'][1]['children'][0]['attributes']['id']['value'] = foo.replace(num, $max);
     foo = $clone[0]['children'][0]['children'][0]['attributes']['name']['value'];
     $clone[0]['children'][0]['children'][0]['attributes']['name']['value'] = foo.replace(num, $max);
-    foo = $clone[0]['children'][1]['children'][0]['attributes']['name']['value'];
-    $clone[0]['children'][1]['children'][0]['attributes']['name']['value'] = foo.replace(num, $max);
+
+    if ($parent.hasClass('lang-block')) {
+        foo = $clone[0]['children'][1]['classList']['value'];
+        $clone[0]['children'][1]['classList']['value'] = foo.replace(num, $max);
+        foo = $clone[0]['children'][1]['children'][0]['attributes']['id']['value'];
+        $clone[0]['children'][1]['children'][0]['attributes']['id']['value'] = foo.replace(num, $max);
+        foo = $clone[0]['children'][1]['children'][0]['attributes']['name']['value'];
+        $clone[0]['children'][1]['children'][0]['attributes']['name']['value'] = foo.replace(num, $max);
+
+        $clone.find('select').val('0');
+    }
     //Конец замены
 
     //чистим поле и фокусим
-    $clone.find('select').val(0);
     $clone.find('input').val('').focus();
     //
 });

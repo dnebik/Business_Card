@@ -70,11 +70,14 @@ class SettingsController extends Controller
                 $user->git = $model->git;
                 $user->social = $model->social;
 
+//              Переделать чтобы все делалось в модели
                 $career = Career::getCareerByUser($user);
                 if (!$career) {
                     $career = new Career();
                     $career->id_user = $user->id;
                 }
+//              до сюда
+
                 $career->text = $model->career;
 
                 LanguageKnowledge::deleteAllFromUser($user);
