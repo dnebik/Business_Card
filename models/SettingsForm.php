@@ -22,7 +22,7 @@ class SettingsForm extends Model
     public function rules()
     {
         return [
-            [['career'], 'string', 'max' => 1000],
+            [['career'], 'string', 'max' => 3000],
 
             [['phone'], 'string', 'max' => 20],
             [['phone'], 'match', 'pattern' => '/^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$/',
@@ -50,6 +50,7 @@ class SettingsForm extends Model
             'languages' => 'Языки',
             'languages_level' => 'Уровень владения языком',
             'interests' => 'Увлечения',
+            'skills' => 'Навыки',
         ];
     }
 

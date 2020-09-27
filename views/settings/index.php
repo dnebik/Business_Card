@@ -13,7 +13,7 @@ use yii\helpers\Html;
 /* @var $languageLevelData array */
 /* @var $interestsData array */
 
-error_log("Languages: " . print_r($model->languages_level, true));
+error_log("Skills: " . print_r($model->skills, true));
 
 
 ?>
@@ -137,9 +137,8 @@ error_log("Languages: " . print_r($model->languages_level, true));
                 do { ?>
                     <div class="interests-block">
                         <?
-                        $optionsInput = ['class' => 'form-control'];
+                        $optionsInput = ['maxlength' => 32];
                         $optionsInput += ['value' => $interest['interest']['name']];
-                        $optionsInput += ['maxlength' => 32];
                         echo $form->field($model, 'interests[' . $key . ']', $options['interests'])
                             ->textInput($optionsInput)->label(false);
                         ?>
@@ -153,7 +152,7 @@ error_log("Languages: " . print_r($model->languages_level, true));
             <!--     [Увлечения конец]      -->
 
             <!--     [Навыки]      -->
-            <? echo Html::label($model->attributeLabels()['interests']); ?>
+            <? echo Html::label($model->attributeLabels()['skills']); ?>
             <div class="block-inputs">
                 <?
                 $key = 0;
@@ -161,15 +160,23 @@ error_log("Languages: " . print_r($model->languages_level, true));
                 do { ?>
                     <div class="skills-block">
                         <?
-                        $optionsInput = ['class' => 'form-control'];
+                        $optionsInput = ['maxlength' => 32];
                         $optionsInput += ['value' => $skill['skill']['name']];
-                        $optionsInput += ['maxlength' => 32];
                         echo $form->field($model, 'skills[' . $key . ']', $options['skill'])
                             ->textInput($optionsInput)->label(false);
                         ?>
 
-                        <? echo $form->field($model, 'skills_percent[' . $key . ']', $options['skills_percent'])
-                        ->input('number', ['min' => 1, 'max' => 100, 'value' => 1])?>
+                        <?
+                        $optionsInput = ['class' => 'form-control number-input'];
+                        $optionsInput += ['min' => 1];
+                        $optionsInput += ['max' => 100];
+                        if ($skill['percent'])
+                            $optionsInput += ['value' => $skill['percent']];
+                        else
+                            $optionsInput += ['value' => 1];
+                        echo $form->field($model, 'skills_percent[' . $key . ']', $options['skills_percent'])
+                        ->input('number', $optionsInput)
+                        ?>
 
                         <a type="button" class="btn btn-danger del_b"><i class="fa fa-minus" aria-hidden="true"></i></a>
                         <a type="button" class="btn btn-info add_b"><i class="fa fa-plus"

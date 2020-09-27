@@ -273,28 +273,23 @@ p {
   border-radius: 5px;
   margin-bottom: 2rem;
 }
+.number-input {
+  width: max-content;
+}
 .lang-block, .interests-block, .skills-block {
   display: flex;
   margin-bottom: 5px;
 }
-/*.languages {*/
-/*  width: 100%; !important;*/
-/*  display: inline-block; !important;*/
-/*}*/
 .lang-field {
   margin-bottom: unset;
   margin-right: 5px;
-  /*max-width: 250px;*/
-  /*width: 50%;*/
   display: inline-block; !important;
   flex: 1 0 auto;
 }
 .know-field {
   margin-bottom: unset;
   margin-right: 5px;
-  /*width: 120px;*/
   display: inline-block; !important;
-  /*flex: 1 0 auto;*/
 }
 .drop-down-lang {
   width: 100%; !important;

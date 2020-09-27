@@ -62,7 +62,8 @@ class SettingsController extends Controller
 
         $model = new SettingsForm();
 
-        if ($model->load(Yii::$app->request->post()) ) {
+        if ( $model->load(Yii::$app->request->post()) ) {
+//            error_log(print_r($model, true));
             if ($model->validate()) {
 
                 $user->email = $model->email;
@@ -74,6 +75,7 @@ class SettingsController extends Controller
                 $careerData = Career::saveCareer($user, $model->career);
                 $languagesData = LanguageKnowledge::saveKnowledge($user, $model->languages, $model->languages_level);
                 $interestsData = PersonalInterest::saveInterests($user, $model->interests);
+                $skillsData = PersonalSkills::saveSkill($user, $model->skills, $model->skills_percent);
             }
         }
 
@@ -85,7 +87,7 @@ class SettingsController extends Controller
         $model->languages_level = $languageLevelData;
         $model->interests = $interestsData;
         $model->career = $careerData['text'];
-//        $model->
+        $model->skills = $skillsData;
 
         return $this->render('index', compact('model'));
     }
