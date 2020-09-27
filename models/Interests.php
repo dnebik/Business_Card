@@ -54,4 +54,8 @@ class Interests extends \yii\db\ActiveRecord
     {
         return $this->hasMany(PersonalInterest::class, ['id_interest' => 'id']);
     }
+
+    public static function getInterestByName(string $interest) {
+        return self::findOne(['name' => $interest]);
+    }
 }

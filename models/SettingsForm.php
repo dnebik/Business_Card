@@ -16,25 +16,27 @@ class SettingsForm extends Model
     public $languages;
     public $languages_level;
     public $interests;
+    public $skills;
+    public $skills_percent;
 
     public function rules()
     {
         return [
-            [['career'], 'string', 'max' => 1000],
+            [['career'], 'string', 'max' => 3000],
 
             [['phone'], 'string', 'max' => 20],
             [['phone'], 'match', 'pattern' => '/^(\s*)?(\+)?([- _():=+]?\d[- _():=+]?){10,14}(\s*)?$/',
                 'message' => 'Не верно введён номер телефона.'],
 
-            [['email'], 'string', 'max' => 255],
-            [['email'], 'match', 'pattern' => '/.+@.+\..+/i', 'message' => 'Не верно заполненное поле «E-mail».'],
+            ['email', 'email'],
 
             [['social', 'git'], 'string', 'max' => 255],
             [['social', 'git'], 'match',
                 'pattern' => '/[(http:\/\/)|(https:\/\/)].+\..+/',
                 'message' => 'Не верно заполненное поле «{attribute}».'],
 
-            [['languages', 'languages_level', 'interests'], 'each', 'rule' => ['string']],
+            [['languages', 'languages_level', 'interests', 'skills'], 'each', 'rule' => ['string']],
+            [['skills_percent'], 'each', 'rule' => ['integer']],
         ];
     }
 
@@ -48,6 +50,7 @@ class SettingsForm extends Model
             'languages' => 'Языки',
             'languages_level' => 'Уровень владения языком',
             'interests' => 'Увлечения',
+            'skills' => 'Навыки',
         ];
     }
 

@@ -9,9 +9,9 @@ use Yii;
  *
  * @property int $id
  * @property int $id_user
- * @property int $id_inerest
+ * @property int $id_interest
  *
- * @property Interests $inerest
+ * @property Interests $interest
  * @property User $user
  */
 class PersonalInterest extends \yii\db\ActiveRecord
@@ -30,9 +30,9 @@ class PersonalInterest extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_user', 'id_inerest'], 'required'],
-            [['id_user', 'id_inerest'], 'integer'],
-            [['id_inerest'], 'exist', 'skipOnError' => true, 'targetClass' => Interests::class, 'targetAttribute' => ['id_inerest' => 'id']],
+            [['id_user', 'id_interest'], 'required'],
+            [['id_user', 'id_interest'], 'integer'],
+            [['id_interest'], 'exist', 'skipOnError' => true, 'targetClass' => Interests::class, 'targetAttribute' => ['id_interest' => 'id']],
             [['id_user'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['id_user' => 'id']],
         ];
     }
@@ -45,7 +45,7 @@ class PersonalInterest extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'id_user' => 'Id User',
-            'id_inerest' => 'Id Inerest',
+            'id_interest' => 'Id Interest',
         ];
     }
 
@@ -71,5 +71,33 @@ class PersonalInterest extends \yii\db\ActiveRecord
 
     public static function getUserInterests(User $user) {
         return self::find()->joinWith(['interest'])->where(['id_user' => $user])->asArray()->all();
+    }
+
+    public static function deleteAllFromUser(User $user) {
+        return self::deleteAll(['id_user' => $user->id]);
+    }
+
+    public static function addInterest(User $user, string $text) {
+        if ($text) {
+            $interest = Interests::getInterestByName($text);
+            if (!$interest) {
+                $interest = new Interests();
+                $interest->name = $text;
+                $interest->save();
+            }
+            $personal_interest = new self;
+            $personal_interest->id_user = $user->id;
+            $personal_interest->id_interest = $interest->id;
+            $personal_interest->save();
+            return $personal_interest;
+        }
+    }
+
+    public static function saveInterests(User $user, array $interests) {
+        PersonalInterest::deleteAllFromUser($user);
+        foreach ($interests as $interest) {
+            self::addInterest($user, $interest);
+        }
+        return self::findAll(['id_user' => $user->id]);
     }
 }

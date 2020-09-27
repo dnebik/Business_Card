@@ -34,6 +34,10 @@ class User extends ActiveRecord implements IdentityInterface
         return $this->hasOne(Career::class, ['id_user' => 'id']);
     }
 
+    public function getLanguages() {
+        return $this->hasMany(LanguageKnowledge::class, ['id_user' => 'id']);
+    }
+
     public static function findIdentity($id)
     {
         return self::find()->where(['id' => $id])->one();

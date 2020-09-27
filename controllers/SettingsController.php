@@ -62,47 +62,34 @@ class SettingsController extends Controller
 
         $model = new SettingsForm();
 
-        if ($model->load(Yii::$app->request->post()) ) {
+        if ( $model->load(Yii::$app->request->post()) ) {
+//            error_log(print_r($model, true));
             if ($model->validate()) {
 
                 $user->email = $model->email;
                 $user->phone = $model->phone;
                 $user->git = $model->git;
                 $user->social = $model->social;
-
-//              Переделать чтобы все делалось в модели
-                $career = Career::getCareerByUser($user);
-                if (!$career) {
-                    $career = new Career();
-                    $career->id_user = $user->id;
-                }
-//              до сюда
-
-                $career->text = $model->career;
-
-                LanguageKnowledge::deleteAllFromUser($user);
-                foreach ($model->languages as $key => $language) {
-                    $level = LevelOfKnowledge::getByIdentity($model->languages_level[$key] + 1);
-                    LanguageKnowledge::addKnowledge($user, $language, $level);
-                }
-
-                $career->save();
                 $user->save();
+
+                $careerData = Career::saveCareer($user, $model->career);
+                $languagesData = LanguageKnowledge::saveKnowledge($user, $model->languages, $model->languages_level);
+                $interestsData = PersonalInterest::saveInterests($user, $model->interests);
+                $skillsData = PersonalSkills::saveSkill($user, $model->skills, $model->skills_percent);
             }
         }
 
-        return $this->render('index', compact(
-            'model',
-            'user',
-            'skillsData',
-            'languagesData',
-            'languageLevelData',
-            'careerData',
-            'educationData',
-            'interestsData',
-            'experiencesData',
-            'projectData'
-        ));
+        $model->phone = $user->phone;
+        $model->email = $user->email;
+        $model->social = $user->social;
+        $model->git = $user->git;
+        $model->languages = $languagesData;
+        $model->languages_level = $languageLevelData;
+        $model->interests = $interestsData;
+        $model->career = $careerData['text'];
+        $model->skills = $skillsData;
+
+        return $this->render('index', compact('model'));
     }
 
 }

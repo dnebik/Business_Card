@@ -187,7 +187,7 @@ $projectData = Projects::getUserProjects($user);
                     echo "<p><b>Нет интересов.</b></p>";
                 } else {
                     foreach ($interestsData as $interest) { ?>
-                        <li><?= $interest["inerest"]["name"] ?></li>
+                        <li><?= $interest["interest"]["name"] ?></li>
                     <? }
                 } ?>
             </ul>

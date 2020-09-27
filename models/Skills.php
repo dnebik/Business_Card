@@ -54,4 +54,8 @@ class Skills extends \yii\db\ActiveRecord
     {
         return $this->hasMany(PersonalSkills::class, ['id_skill' => 'id']);
     }
+
+    public static function getSkillByName(string $name) {
+        return self::findOne(['name' => $name]);
+    }
 }

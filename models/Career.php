@@ -64,6 +64,17 @@ class Career extends \yii\db\ActiveRecord
         return self::findOne(['id_user' => $user->id]);
     }
 
+    public static function saveCareer(User $user, string $text) {
+        $career = self::findOne(['id_user' => $user->id]);
+        if (!$career) {
+            $career = new Career();
+            $career->id_user = $user->id;
+        }
+        $career->text = $text;
+        $career->save();
+        return $career;
+    }
+
     public static function getUserCareer(User $user) {
         return self::find()->where(['id_user' => $user->id])->asArray()->one();
     }
