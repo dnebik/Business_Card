@@ -249,7 +249,7 @@ p {
 .skillset .level-bar {
   margin-bottom: 5px;
   height: 12px;
-  background: #f5f5f5;
+  /*background: #f5f5f5;*/
 }
 .skillset .level-bar-inner {
   height: 12px;
