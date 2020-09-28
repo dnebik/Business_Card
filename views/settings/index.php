@@ -13,8 +13,9 @@ use yii\helpers\Html;
 /* @var $languageLevelData array */
 /* @var $interestsData array */
 
-error_log("Skills: " . print_r($model->skills, true));
+//error_log("Skills: " . print_r($model->skills, true));
 
+$this->title = "Натройки";
 
 ?>
 

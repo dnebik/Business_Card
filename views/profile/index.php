@@ -9,8 +9,10 @@ use app\models\PersonalInterest;
 use app\models\Experience;
 use app\models\Projects;
 use yii\helpers\Url;
+use yii\web\View;
 
 /* @var $user User */
+/* @var $this yii\web\View */
 
 $skillsData = PersonalSkills::getAllUserSkills($user);
 $languagesData = LanguageKnowledge::getAllUserKnowledge($user);
@@ -19,6 +21,8 @@ $educationData = Education::getUserEducation($user);
 $interestsData = PersonalInterest::getUserInterests($user);
 $experiencesData = Experience::getUserExperience($user);
 $projectData = Projects::getUserProjects($user);
+
+$this->title = $user->first_name. "  " . $user->last_name . " | Партфолио";
 
 ?>
 
@@ -82,18 +86,20 @@ $projectData = Projects::getUserProjects($user);
         <section class="skills-section section">
             <h2 class="section-title"><i class="fa fa-rocket"></i>Навыки &amp; Умения</h2>
             <div class="skillset">
-                <table>
+                <table class="w-100">
                     <?
                     if (!$skillsData) {
                         echo "<p><b>Нет навыков.</b></p>";
                     } else {
+                        $i = 0;
                         foreach ($skillsData as $skill) { ?>
                             <!--                        <div class="item">-->
-                            <tr>
+                            <? if ($i) $i = 0; else $i = 1; ?>
+                            <tr style="<?= ($i) ? "background-color: #42a8c01a;" : "" ?>">
                                 <td>
                                     <h3 class="level-title"><?= $skill['skill']["name"] ?></h3>
                                 </td>
-                                <td class="w-100">
+                                <td style="width: 60%">
                                     <div class="level-bar">
                                         <div class="level-bar-inner" data-level="<?= $skill["percent"] ?>%">
                                         </div>
